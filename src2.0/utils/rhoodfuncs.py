@@ -19,13 +19,13 @@ def getOptionsByDate(name, date):
             options["market data"].append(mrkt_data)
             if(mrkt_data):
                 tmp = {
-                    "strike_price"             : float(option["strike_price"],
+                    "strike_price"             : float(option["strike_price"]),
                     "exp_date"                 : option["expiration_date"],
-                    "mark_price"               : float(options["market data"][-1][0]["adjusted_mark_price"],
-                    "bid_price"                : options["market data"][-1][0]["adjusted_mark_price"],
-                    "ask_price"                : options["market data"][-1][0]["adjusted_mark_price"],
-                    "delta"                    : options["market data"][-1][0]["delta"],
-                    "theta"                    : options["market data"][-1][0]["theta"],
+                    "mark_price"               : float(options["market data"][-1][0]["adjusted_mark_price"]),
+                    "bid_price"                : float(options["market data"][-1][0]["adjusted_mark_price"]),
+                    "ask_price"                : float(options["market data"][-1][0]["adjusted_mark_price"]),
+                    "delta"                    : float(options["market data"][-1][0]["delta"]),
+                    "theta"                    : float(options["market data"][-1][0]["theta"]),
                     "high_fill_rate_buy_price" : options["market data"][-1][0]["high_fill_rate_buy_price"],
                     "high_fill_rate_sell_price": options["market data"][-1][0]["high_fill_rate_sell_price"]
                 }

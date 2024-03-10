@@ -2,6 +2,12 @@ from utils.rhoodfuncs import login, get_price, getOptionsByDate, getHistoricals
 import json, random, plotille
 from datetime import datetime, timedelta
 
+# return a function for profit by price at expiration
+def get_profit_func(o0, o1, o2, o3):
+    price = o0["mark_price"] - o1["mark_price"] - o2["mark_price"] + o3["mark_price"]
+    func = lambda x: -price + (x > o0["strike_price"] and x - o0["strike_price"]) - (x > o1["strike_price"] and x - o1["strike_price"]) - (x > o2["strike_price"] and x - o2["strike_price"]) + (x > o3["strike_price"] and x - o3["strike_price"])
+    return(func)
+
 # returns string for expiration date and days left
 def get_days_left():
     curr_date = datetime.now().date()
@@ -91,6 +97,10 @@ if __name__ == "__main__":
     #get options available at expiration date
     options = getOptionsByDate(stock, expiration_date)
     #loop through all four option combinations
+    all_possible_combinations = [(a,b,c,d) for i0, a in enumerate(options) for i1, b in enumerate(options[i0+1:]) for i2, c in enumerate(options[i1+i0+2:]) for d in options[i2+i1+i0+3:]]
+    for o0, o1, o2, o3 in all_possible_combinations:
+        
+        profit = get_profit_func(o0, o1, o2, o3)
     #   get profit for each price at expiration (step by inc)
     #   integrate stock price dist times profit by price to get expected value for profit
     #   keep track of maximized expected profit
