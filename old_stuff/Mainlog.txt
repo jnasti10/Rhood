@@ -1,0 +1,709 @@
+ERROR: There was an issue loading pickle file. Authentication may be expired - logging in normally.
+Loading new data
+Getting current positions
+{'BSV': 0.0, 'BTC': 0.0, 'BCH': 0.0, 'ETC': 0.0, 'LTC': 0.0, 'ETH': 0.0, 'DOGE': 0.0}
+data.pre_update
+
+========= CRYPTODATA ==========
+===============================
+
+intitial investment     = 10000
+cash available          = 10000
+total value 5min        = [10000, 10000.0]
+total value daily       = []
+cryptos:                  ['BTC', 'ETH', 'BCH', 'LTC', 'DOGE', 'ETC', 'BSV']
+individual totals 5min:   
+ - BTC -> [0.0]
+ - ETH -> [0.0]
+ - BCH -> [0.0]
+ - LTC -> [0.0]
+ - DOGE -> [0.0]
+ - ETC -> [0.0]
+ - BSV -> [0.0]
+
+individual totals daily:  
+ - BTC -> []
+ - ETH -> []
+ - BCH -> []
+ - LTC -> []
+ - DOGE -> []
+ - ETC -> []
+ - BSV -> []
+
+correct predictions 5min: 
+ - BTC -> []
+ - ETH -> []
+ - BCH -> []
+ - LTC -> []
+ - DOGE -> []
+ - ETC -> []
+ - BSV -> []
+
+previous prevdiction:     
+ - BTC -> []
+ - ETH -> []
+ - BCH -> []
+ - LTC -> []
+ - DOGE -> []
+ - ETC -> []
+ - BSV -> []
+
+percent correct daily:    
+ - BTC -> []
+ - ETH -> []
+ - BCH -> []
+ - LTC -> []
+ - DOGE -> []
+ - ETC -> []
+ - BSV -> []
+
+total percent correct daily = []
+getting predictions
+{'BTC': 3.918339706440385e-05, 'ETH': 4.793584370323394e-05, 'BCH': 0.0002711990561481108, 'LTC': 0.00016853588282160554, 'DOGE': -0.00018141169759403758, 'ETC': 0.00047340215283076805, 'BSV': 0.0005595604906691477}
+normalizing predictions to next positions
+{'BTC': 251.20511896443054, 'ETH': 307.3171348655356, 'BCH': 1738.6596432859326, 'LTC': 1080.4850948576343, 'DOGE': 0.0, 'ETC': 3034.9855558568815, 'BSV': 3587.3474521695857}
+getting actions
+{'BSV': 3587.3474521695857, 'BTC': 251.20511896443054, 'BCH': 1738.6596432859326, 'ETC': 3034.9855558568815, 'LTC': 1080.4850948576343, 'ETH': 307.3171348655356, 'DOGE': 0.0}
+BSV 3551.47397764789 
+ account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a6f13-11e8-4f0e-8563-d2c9142c8964/cancel/
+created_at -> 2021-10-16T02:20:03.489355-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 086a8f9f-6c39-43fa-ac9f-57952f4a1ba6
+entered_price -> 3515.680000000000000000
+executions -> []
+id -> 616a6f13-11e8-4f0e-8563-d2c9142c8964
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> None
+price -> 172.120000000000000000
+quantity -> 20.630000000000000000
+ref_id -> 8dafad40-ba75-4364-a223-b349b1c7c38b
+rounded_executed_notional -> 0.00
+side -> buy
+state -> unconfirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:20:03.707847-04:00
+
+BTC 248.69306777478624 
+ account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a6f13-852f-45c2-a8f7-bc45ee330e33/cancel/
+created_at -> 2021-10-16T02:20:03.923661-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 3d961844-d360-45fc-989b-f6fca761d511
+entered_price -> 246.230000000000000000
+executions -> []
+id -> 616a6f13-852f-45c2-a8f7-bc45ee330e33
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> None
+price -> 62251.940000000000000000
+quantity -> 0.003995000000000000
+ref_id -> 1c78bbef-21da-48b4-98c0-26266f1e534f
+rounded_executed_notional -> 0.00
+side -> buy
+state -> unconfirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:20:04.138462-04:00
+
+BCH 1721.2730468530733 
+ account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a6f14-c727-4d59-b79f-3019128b700a/cancel/
+created_at -> 2021-10-16T02:20:04.340819-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 2f2b77c4-e426-4271-ae49-18d5cb296d3a
+entered_price -> 1705.330000000000000000
+executions -> []
+id -> 616a6f14-c727-4d59-b79f-3019128b700a
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> None
+price -> 630.910000000000000000
+quantity -> 2.730000000000000000
+ref_id -> f285a60a-27cf-4b13-ae61-d066619d14fc
+rounded_executed_notional -> 0.00
+side -> buy
+state -> unconfirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:20:04.544469-04:00
+
+ETC 3004.6357002983127 
+ account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a6f14-caf5-4103-9538-d75434ef70c6/cancel/
+created_at -> 2021-10-16T02:20:04.735377-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 7b577ce3-489d-4269-9408-796a0d1abb3a
+entered_price -> 2974.760000000000000000
+executions -> []
+id -> 616a6f14-caf5-4103-9538-d75434ef70c6
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> None
+price -> 54.390000000000000000
+quantity -> 55.240000000000000000
+ref_id -> 57f759bb-8b31-4073-b426-e68a06d24e44
+rounded_executed_notional -> 0.00
+side -> buy
+state -> unconfirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:20:05.022305-04:00
+
+LTC 1069.680243909058 
+ account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a6f15-955f-44e4-abe1-356f831ae4ca/cancel/
+created_at -> 2021-10-16T02:20:05.224782-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 383280b1-ff53-43fc-9c84-f01afd0989cd
+entered_price -> 1058.900000000000000000
+executions -> []
+id -> 616a6f15-955f-44e4-abe1-356f831ae4ca
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> None
+price -> 190.300000000000000000
+quantity -> 5.620000000000000000
+ref_id -> 3413c197-6f43-4114-9317-925f837a47cb
+rounded_executed_notional -> 0.00
+side -> buy
+state -> unconfirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:20:05.451740-04:00
+
+ETH 304.2439635168802 
+ account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a6f15-9f96-4947-9bff-f9aeefd2f0b9/cancel/
+created_at -> 2021-10-16T02:20:05.650712-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 76637d50-c702-4ed1-bcb5-5b0732a81f48
+entered_price -> 301.080000000000000000
+executions -> []
+id -> 616a6f15-9f96-4947-9bff-f9aeefd2f0b9
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> None
+price -> 3868.780000000000000000
+quantity -> 0.078600000000000000
+ref_id -> 0cd0b144-8c6d-43f2-a924-e8deebaddc3c
+rounded_executed_notional -> 0.00
+side -> buy
+state -> unconfirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:20:05.873137-04:00
+
+fully executed order for  BSV
+account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> 172.120000000000000000
+cancel_url -> None
+created_at -> 2021-10-16T02:20:03.489355-04:00
+cumulative_quantity -> 20.630000000000000000
+currency_pair_id -> 086a8f9f-6c39-43fa-ac9f-57952f4a1ba6
+entered_price -> 3515.680000000000000000
+executions -> [{'effective_price': '172.120000000000000000', 'id': '616a6f13-afa5-40da-9957-4affe976f837', 'quantity': '20.000000000000000000', 'timestamp': '2021-10-16T02:20:03.823000-04:00'}, {'effective_price': '172.120000000000000000', 'id': '616a6f13-3a3f-4451-ac43-4e1c0552ec2e', 'quantity': '0.630000000000000000', 'timestamp': '2021-10-16T02:20:03.829000-04:00'}]
+id -> 616a6f13-11e8-4f0e-8563-d2c9142c8964
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> 2021-10-16T02:20:03.829000-04:00
+price -> 172.120000000000000000
+quantity -> 20.630000000000000000
+ref_id -> 8dafad40-ba75-4364-a223-b349b1c7c38b
+rounded_executed_notional -> 3550.84
+side -> buy
+state -> filled
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:20:04.821739-04:00
+
+fully executed order for  BTC
+account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> 62251.462101300000000000
+cancel_url -> None
+created_at -> 2021-10-16T02:20:03.923661-04:00
+cumulative_quantity -> 0.003995000000000000
+currency_pair_id -> 3d961844-d360-45fc-989b-f6fca761d511
+entered_price -> 246.230000000000000000
+executions -> [{'effective_price': '62251.462101300000000000', 'id': '616a6f14-6b66-454e-904b-2bc62f8c217d', 'quantity': '0.003995000000000000', 'timestamp': '2021-10-16T02:20:04.217000-04:00'}]
+id -> 616a6f13-852f-45c2-a8f7-bc45ee330e33
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> 2021-10-16T02:20:04.217000-04:00
+price -> 62251.940000000000000000
+quantity -> 0.003995000000000000
+ref_id -> 1c78bbef-21da-48b4-98c0-26266f1e534f
+rounded_executed_notional -> 248.70
+side -> buy
+state -> filled
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:20:04.943327-04:00
+
+partially filled for  BCH state is partially_filled
+Order <built-in function id> cancelled
+account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> 630.893486700000000000
+cancel_url -> https://nummus.robinhood.com/orders/616a6f14-c727-4d59-b79f-3019128b700a/cancel/
+created_at -> 2021-10-16T02:20:04.340819-04:00
+cumulative_quantity -> 0.825000000000000000
+currency_pair_id -> 2f2b77c4-e426-4271-ae49-18d5cb296d3a
+entered_price -> 1705.330000000000000000
+executions -> [{'effective_price': '630.893486700000000000', 'id': '616a6f14-0c3e-4d3e-938f-dbb45a5e27f9', 'quantity': '0.825000000000000000', 'timestamp': '2021-10-16T02:20:04.619000-04:00'}]
+id -> 616a6f14-c727-4d59-b79f-3019128b700a
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> 2021-10-16T02:20:04.619000-04:00
+price -> 630.910000000000000000
+quantity -> 2.730000000000000000
+ref_id -> f285a60a-27cf-4b13-ae61-d066619d14fc
+rounded_executed_notional -> 520.49
+side -> buy
+state -> partially_filled
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:20:06.062059-04:00
+
+fully executed order for  ETC
+account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> 54.387000000000000000
+cancel_url -> None
+created_at -> 2021-10-16T02:20:04.735377-04:00
+cumulative_quantity -> 55.240000000000000000
+currency_pair_id -> 7b577ce3-489d-4269-9408-796a0d1abb3a
+entered_price -> 2974.760000000000000000
+executions -> [{'effective_price': '54.387000000000000000', 'id': '616a6f15-c038-4369-865b-bff4e9b358b3', 'quantity': '55.240000000000000000', 'timestamp': '2021-10-16T02:20:05.081000-04:00'}]
+id -> 616a6f14-caf5-4103-9538-d75434ef70c6
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> 2021-10-16T02:20:05.081000-04:00
+price -> 54.390000000000000000
+quantity -> 55.240000000000000000
+ref_id -> 57f759bb-8b31-4073-b426-e68a06d24e44
+rounded_executed_notional -> 3004.34
+side -> buy
+state -> filled
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:20:06.178470-04:00
+
+order not executed for  LTC state is confirmed canceling
+account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a6f15-955f-44e4-abe1-356f831ae4ca/cancel/
+created_at -> 2021-10-16T02:20:05.224782-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 383280b1-ff53-43fc-9c84-f01afd0989cd
+entered_price -> 1058.900000000000000000
+executions -> []
+id -> 616a6f15-955f-44e4-abe1-356f831ae4ca
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> 2021-10-16T02:20:05.529000-04:00
+price -> 190.300000000000000000
+quantity -> 5.620000000000000000
+ref_id -> 3413c197-6f43-4114-9317-925f837a47cb
+rounded_executed_notional -> 0.00
+side -> buy
+state -> confirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:20:06.273208-04:00
+
+order not executed for  ETH state is confirmed canceling
+account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a6f15-9f96-4947-9bff-f9aeefd2f0b9/cancel/
+created_at -> 2021-10-16T02:20:05.650712-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 76637d50-c702-4ed1-bcb5-5b0732a81f48
+entered_price -> 301.080000000000000000
+executions -> []
+id -> 616a6f15-9f96-4947-9bff-f9aeefd2f0b9
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> 2021-10-16T02:20:05.977000-04:00
+price -> 3868.780000000000000000
+quantity -> 0.078600000000000000
+ref_id -> 0cd0b144-8c6d-43f2-a924-e8deebaddc3c
+rounded_executed_notional -> 0.00
+side -> buy
+state -> confirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:20:07.308286-04:00
+
+No order for  DOGE
+data.post_update and saving
+
+========= CRYPTODATA ==========
+===============================
+
+intitial investment     = 10000
+cash available          = 2675.63
+total value 5min        = [10000, 10000.0]
+total value daily       = []
+cryptos:                  ['BTC', 'ETH', 'BCH', 'LTC', 'DOGE', 'ETC', 'BSV']
+individual totals 5min:   
+ - BTC -> [0.0, 247.73554300000004]
+ - ETH -> [0.0, 0.0]
+ - BCH -> [0.0, 519.29625]
+ - LTC -> [0.0, 0.0]
+ - DOGE -> [0.0, 0.0]
+ - ETC -> [0.0, 2997.10144]
+ - BSV -> [0.0, 3543.02617539]
+
+individual totals daily:  
+ - BTC -> []
+ - ETH -> []
+ - BCH -> []
+ - LTC -> []
+ - DOGE -> []
+ - ETC -> []
+ - BSV -> []
+
+correct predictions 5min: 
+ - BTC -> []
+ - ETH -> []
+ - BCH -> []
+ - LTC -> []
+ - DOGE -> []
+ - ETC -> []
+ - BSV -> []
+
+previous prevdiction:     
+ - BTC -> 3.918339706440385e-05
+ - ETH -> 4.793584370323394e-05
+ - BCH -> 0.0002711990561481108
+ - LTC -> 0.00016853588282160554
+ - DOGE -> -0.00018141169759403758
+ - ETC -> 0.00047340215283076805
+ - BSV -> 0.0005595604906691477
+
+percent correct daily:    
+ - BTC -> []
+ - ETH -> []
+ - BCH -> []
+ - LTC -> []
+ - DOGE -> []
+ - ETC -> []
+ - BSV -> []
+
+total percent correct daily = []
+ERROR: There was an issue loading pickle file. Authentication may be expired - logging in normally.
+Loading new data
+Getting current positions
+{'BSV': 3542.0413817099998, 'BTC': 248.35237653307502, 'BCH': 520.179721875, 'ETC': 3004.25910776, 'LTC': 0.0, 'ETH': 0.0, 'DOGE': 0.0}
+data.pre_update
+
+========= CRYPTODATA ==========
+===============================
+
+intitial investment     = 10000
+cash available          = 2675.63
+total value 5min        = [10000, 10000.0, 9990.462587878075]
+total value daily       = []
+cryptos:                  ['BTC', 'ETH', 'BCH', 'LTC', 'DOGE', 'ETC', 'BSV']
+individual totals 5min:   
+ - BTC -> [0.0, 247.73554300000004, 248.35237653307502]
+ - ETH -> [0.0, 0.0, 0.0]
+ - BCH -> [0.0, 519.29625, 520.179721875]
+ - LTC -> [0.0, 0.0, 0.0]
+ - DOGE -> [0.0, 0.0, 0.0]
+ - ETC -> [0.0, 2997.10144, 3004.25910776]
+ - BSV -> [0.0, 3543.02617539, 3542.0413817099998]
+
+individual totals daily:  
+ - BTC -> []
+ - ETH -> []
+ - BCH -> []
+ - LTC -> []
+ - DOGE -> []
+ - ETC -> []
+ - BSV -> []
+
+correct predictions 5min: 
+ - BTC -> [True]
+ - ETH -> [False]
+ - BCH -> [True]
+ - LTC -> [False]
+ - DOGE -> [True]
+ - ETC -> [True]
+ - BSV -> [False]
+
+previous prevdiction:     
+ - BTC -> 3.918339706440385e-05
+ - ETH -> 4.793584370323394e-05
+ - BCH -> 0.0002711990561481108
+ - LTC -> 0.00016853588282160554
+ - DOGE -> -0.00018141169759403758
+ - ETC -> 0.00047340215283076805
+ - BSV -> 0.0005595604906691477
+
+percent correct daily:    
+ - BTC -> []
+ - ETH -> []
+ - BCH -> []
+ - LTC -> []
+ - DOGE -> []
+ - ETC -> []
+ - BSV -> []
+
+total percent correct daily = []
+getting predictions
+{'BTC': -0.000287911024463399, 'ETH': -0.00010737159524996163, 'BCH': 0.00010299721907509638, 'LTC': -0.0001860754284113024, 'DOGE': -2.8969360887034757e-05, 'ETC': -7.13667421772869e-05, 'BSV': 4.380457319744347e-05}
+normalizing predictions to next positions
+{'BTC': 0.0, 'ETH': 0.0, 'BCH': 7009.3821600958145, 'LTC': 0.0, 'DOGE': 0.0, 'ETC': 0.0, 'BSV': 2981.080427782261}
+getting actions
+{'BSV': -560.960953927739, 'BTC': -248.35237653307502, 'BCH': 6489.202438220815, 'ETC': -3004.25910776, 'LTC': 0.0, 'ETH': 0.0, 'DOGE': 0.0}
+BSV 555.3513443884616 
+ account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a716b-3dbf-47ee-8322-4a75bf924653/cancel/
+created_at -> 2021-10-16T02:30:03.584068-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 086a8f9f-6c39-43fa-ac9f-57952f4a1ba6
+entered_price -> 583.780000000000000000
+executions -> []
+id -> 616a716b-3dbf-47ee-8322-4a75bf924653
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> None
+price -> 171.170000000000000000
+quantity -> 3.240000000000000000
+ref_id -> 7e5b44c9-e3b6-493e-a395-361e65859cba
+rounded_executed_notional -> 0.00
+side -> sell
+state -> unconfirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:30:03.584085-04:00
+
+BTC 245.86885276774427 
+ account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a716b-b187-43e3-b441-85d01b846584/cancel/
+created_at -> 2021-10-16T02:30:03.792175-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 3d961844-d360-45fc-989b-f6fca761d511
+entered_price -> 258.820000000000000000
+executions -> []
+id -> 616a716b-b187-43e3-b441-85d01b846584
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> None
+price -> 62043.680000000000000000
+quantity -> 0.003963000000000000
+ref_id -> f30ca629-af09-4c25-8ffd-daec5f38cb1f
+rounded_executed_notional -> 0.00
+side -> sell
+state -> unconfirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:30:03.792196-04:00
+
+ETC 2974.2165166824 
+ account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a716c-91c1-4fa0-8f1f-c0626fcf137f/cancel/
+created_at -> 2021-10-16T02:30:04.033237-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 7b577ce3-489d-4269-9408-796a0d1abb3a
+entered_price -> 3130.490000000000000000
+executions -> []
+id -> 616a716c-91c1-4fa0-8f1f-c0626fcf137f
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> None
+price -> 54.220000000000000000
+quantity -> 54.850000000000000000
+ref_id -> 64df812d-aaa7-41d6-aab4-5bb8c5e34284
+rounded_executed_notional -> 0.00
+side -> sell
+state -> unconfirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:30:04.033260-04:00
+
+BCH 6424.310413838606 
+ account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a716c-6ccf-41ab-b64e-6d36bdd2453a/cancel/
+created_at -> 2021-10-16T02:30:04.295362-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 2f2b77c4-e426-4271-ae49-18d5cb296d3a
+entered_price -> 6361.870000000000000000
+executions -> []
+id -> 616a716c-6ccf-41ab-b64e-6d36bdd2453a
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> None
+price -> 632.430000000000000000
+quantity -> 10.160000000000000000
+ref_id -> 79469582-9039-4f5e-8762-d901d42ca524
+rounded_executed_notional -> 0.00
+side -> buy
+state -> unconfirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:30:04.518946-04:00
+
+order not executed for  BSV state is confirmed canceling
+account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a716b-3dbf-47ee-8322-4a75bf924653/cancel/
+created_at -> 2021-10-16T02:30:03.584068-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 086a8f9f-6c39-43fa-ac9f-57952f4a1ba6
+entered_price -> 583.780000000000000000
+executions -> []
+id -> 616a716b-3dbf-47ee-8322-4a75bf924653
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> 2021-10-16T02:30:03.700000-04:00
+price -> 171.170000000000000000
+quantity -> 3.240000000000000000
+ref_id -> 7e5b44c9-e3b6-493e-a395-361e65859cba
+rounded_executed_notional -> 0.00
+side -> sell
+state -> confirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:30:04.144231-04:00
+
+order not executed for  BTC state is confirmed canceling
+account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a716b-b187-43e3-b441-85d01b846584/cancel/
+created_at -> 2021-10-16T02:30:03.792175-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 3d961844-d360-45fc-989b-f6fca761d511
+entered_price -> 258.820000000000000000
+executions -> []
+id -> 616a716b-b187-43e3-b441-85d01b846584
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> 2021-10-16T02:30:03.959000-04:00
+price -> 62043.680000000000000000
+quantity -> 0.003963000000000000
+ref_id -> f30ca629-af09-4c25-8ffd-daec5f38cb1f
+rounded_executed_notional -> 0.00
+side -> sell
+state -> confirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:30:05.183666-04:00
+
+order not executed for  ETC state is confirmed canceling
+account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> None
+cancel_url -> https://nummus.robinhood.com/orders/616a716c-91c1-4fa0-8f1f-c0626fcf137f/cancel/
+created_at -> 2021-10-16T02:30:04.033237-04:00
+cumulative_quantity -> 0.000000000000000000
+currency_pair_id -> 7b577ce3-489d-4269-9408-796a0d1abb3a
+entered_price -> 3130.490000000000000000
+executions -> []
+id -> 616a716c-91c1-4fa0-8f1f-c0626fcf137f
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> 2021-10-16T02:30:04.167000-04:00
+price -> 54.220000000000000000
+quantity -> 54.850000000000000000
+ref_id -> 64df812d-aaa7-41d6-aab4-5bb8c5e34284
+rounded_executed_notional -> 0.00
+side -> sell
+state -> confirmed
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:30:05.228000-04:00
+
+fully executed order for  BCH
+account_id -> 0f87043d-94f3-49d9-84ed-5165c4f509ff
+average_price -> 632.105196850393700787
+cancel_url -> None
+created_at -> 2021-10-16T02:30:04.295362-04:00
+cumulative_quantity -> 10.160000000000000000
+currency_pair_id -> 2f2b77c4-e426-4271-ae49-18d5cb296d3a
+entered_price -> 6361.870000000000000000
+executions -> [{'effective_price': '632.100000000000000000', 'id': '616a716c-8da0-4aa1-8bd2-cebf9d8e0e7b', 'quantity': '10.000000000000000000', 'timestamp': '2021-10-16T02:30:04.581000-04:00'}, {'effective_price': '632.430000000000000000', 'id': '616a716c-e6f4-4b47-8331-d83686f49f1f', 'quantity': '0.160000000000000000', 'timestamp': '2021-10-16T02:30:04.599000-04:00'}]
+id -> 616a716c-6ccf-41ab-b64e-6d36bdd2453a
+initiator_id -> None
+initiator_type -> None
+last_transaction_at -> 2021-10-16T02:30:04.599000-04:00
+price -> 632.430000000000000000
+quantity -> 10.160000000000000000
+ref_id -> 79469582-9039-4f5e-8762-d901d42ca524
+rounded_executed_notional -> 6422.19
+side -> buy
+state -> filled
+time_in_force -> gtc
+type -> market
+updated_at -> 2021-10-16T02:30:05.304676-04:00
+
+No order for  LTC
+No order for  ETH
+No order for  DOGE
+data.post_update and saving
+
+========= CRYPTODATA ==========
+===============================
+
+intitial investment     = 10000
+cash available          = -3746.5599999999995
+total value 5min        = [10000, 10000.0, 9990.462587878075]
+total value daily       = []
+cryptos:                  ['BTC', 'ETH', 'BCH', 'LTC', 'DOGE', 'ETC', 'BSV']
+individual totals 5min:   
+ - BTC -> [0.0, 247.73554300000004, 248.35237653307502, 248.148006775]
+ - ETH -> [0.0, 0.0, 0.0, 0.0]
+ - BCH -> [0.0, 519.29625, 520.179721875, 6921.044324999999]
+ - LTC -> [0.0, 0.0, 0.0, 0.0]
+ - DOGE -> [0.0, 0.0, 0.0, 0.0]
+ - ETC -> [0.0, 2997.10144, 3004.25910776, 3001.7090084]
+ - BSV -> [0.0, 3543.02617539, 3542.0413817099998, 3538.9721947199996]
+
+individual totals daily:  
+ - BTC -> []
+ - ETH -> []
+ - BCH -> []
+ - LTC -> []
+ - DOGE -> []
+ - ETC -> []
+ - BSV -> []
+
+correct predictions 5min: 
+ - BTC -> [True]
+ - ETH -> [False]
+ - BCH -> [True]
+ - LTC -> [False]
+ - DOGE -> [True]
+ - ETC -> [True]
+ - BSV -> [False]
+
+previous prevdiction:     
+ - BTC -> -0.000287911024463399
+ - ETH -> -0.00010737159524996163
+ - BCH -> 0.00010299721907509638
+ - LTC -> -0.0001860754284113024
+ - DOGE -> -2.8969360887034757e-05
+ - ETC -> -7.13667421772869e-05
+ - BSV -> 4.380457319744347e-05
+
+percent correct daily:    
+ - BTC -> []
+ - ETH -> []
+ - BCH -> []
+ - LTC -> []
+ - DOGE -> []
+ - ETC -> []
+ - BSV -> []
+
+total percent correct daily = []
