@@ -33,11 +33,14 @@ def getOptionsByDate(name, date):
     options["return data"].sort(key=lambda x: float(x["strike_price"]))
     return(options["return data"])
 
+def order_spread(direction, price, symbol, quantity, spread):
+    return(r.orders.order_option_spread(direction, price, symbol, quantity, spread))
+
 def getOptionsByPrice(name, price):
     options = o.find_tradable_options(name, expirationDate=None, strikePrice=price, info=None)
     return(options)
 
-def getHistoricals(name, interval="day", span="3month"):
+def getHistoricals(name, interval="day", span="month"):
     historicals = s.get_stock_historicals(name, interval=interval, span=span)
     return(historicals)
 
