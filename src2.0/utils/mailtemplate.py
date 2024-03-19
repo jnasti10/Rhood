@@ -82,7 +82,7 @@ class MailTemplate:
     
     image_html = """
     <div class="image-container">
-        <img src="http://joeynasti.com/{image_name}" alt="{image_name}">
+        <img src="https://joeynasti.com/{image_name}" alt="{image_name}">
     </div>
 """
 
@@ -124,9 +124,9 @@ class MailTemplate:
         s = ""
         
         for image_name in images:
-            print(s)
+            #print(s)
             s += self.image_html.format(image_name=image_name)
-            print(s)
+            #print(s)
 
         return(s)
 

@@ -1,6 +1,6 @@
 import boto3
 from botocore.exceptions import ClientError
-from mailtemplate import MailTemplate
+from utils.mailtemplate import MailTemplate
 
 def send(to, frm, subject, body, region="us-east-2"):
     # Create a new SES resource and specify a region.
@@ -43,47 +43,12 @@ def send(to, frm, subject, body, region="us-east-2"):
         print("Email sent! Message ID:"),
         print(response['MessageId'])
 
-def create_body(images=None, test=False):
-    if(test):
+def create_body(strategy, images, expected_profit, test=False):
+    if(not test):
+        tmplt = MailTemplate()
+        return(tmplt.create_body(strategy, images, expected_profit))
+    else:
         return(BODY_HTML)
-
-    body = \
-"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Image Gallery</title>
-<style>
-    .image-container {
-        display: inline-block;
-        text-align: center;
-        margin: 20px;
-    }
-    .image-container img {
-        max-width: 200px;
-        height: auto;
-    }
-</style>
-</head>
-<body>
-"""
-
-    for image in images:
-        s = f"""
-        <div class="image-container">
-            <p>{image["description"]}</p>
-            <img src="http://joeynasti.com/{image["name"]}" alt="{image["name"]}">
-        </div>
-        """
-        body += s
-
-    body += """
-    </body>
-    </html>"""
-
-    return(body)
-
 
 # for testing
 SENDER = "jo@joeynasti.com"

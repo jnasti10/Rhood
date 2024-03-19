@@ -186,30 +186,17 @@ if __name__ == "__main__":
     visualize_optimal_strategy(optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, percentages) 
 
     # generate plot images
-    plot_func(optimal_profit_func, int(current_price + min(agg_changes)), int(current_price + max(agg_changes)), "/var/www/html/jn/profit_func.png")
-    plot_hist([current_price + o for o in agg_changes], "/var/www/html/jn/stock_price_pdf.png", bins=100) 
+    images = ["profit_func.png", "stock_price_pdf.png", "profit_by_pdf.png"]
+    plot_func(optimal_profit_func, int(current_price + min(agg_changes)), int(current_price + max(agg_changes)), "/var/www/html/jn/" + images[0])
+    plot_hist([current_price + o for o in agg_changes], "/var/www/html/jn/" + images[1], bins=100) 
     pdf_func = lambda x: stock_change_dist[(x - current_price)//.5 * .5]
-    plot_func(lambda x: optimal_profit_func(x) * pdf_func(x), int(min(list(stock_change_dist.keys())) + current_price + 1), int(max(list(stock_change_dist.keys())) + current_price), "/var/www/html/jn/profit_by_pdf.png", title="Profit X PDF", ylabel=None)
+    plot_func(lambda x: optimal_profit_func(x) * pdf_func(x), int(min(list(stock_change_dist.keys())) + current_price + 1), int(max(list(stock_change_dist.keys())) + current_price), "/var/www/html/jn/" + images[2], title="Profit X PDF", ylabel=None)
 
     # send the email summary
-    body = create_body(optimal_strategy, 
-                        [
-                            {
-                                "name" : "profit_func.png",
-                                "description": "PROFIT!!!!!"
-                            },
-                            {
-                                "name" : "stock_price_pdf.png",
-                                "description": "PRICE PROBABILITY DISTRIBUTION FUNC!!!!!"
-                            },
-                            {
-                                "name" : "profit_by_pdf.png",
-                                "description": "PROFIT TIMES PROBABILITY DISTRIBUTION FUNC!!!!!"
-                            }
-                        ])
+    body = create_body(optimal_strategy, images, optimal_exp_profit)
 
     print(body)
-    #send("jnasti101@icloud.com", "jo@joeynasti.com", "Option Strat Summary", body)                                
+    send("jnasti101@icloud.com", "jo@joeynasti.com", "Option Strat Summary", body)                                
     
     #   get profit for each price at expiration (step by inc)
     #   integrate stock price dist times profit by price to get expected value for profit
