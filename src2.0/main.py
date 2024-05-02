@@ -1,66 +1,22 @@
 #! /usr/local/bin/python3.8
-from utils.rhoodfuncs  import login, get_price, getOptionsByDate, getHistoricals
-from utils.sendmail    import send, create_body
-from utils.plot_stuff  import plot_func, plot_hist
-from strategies.common import get_profit_func, get_days_left, get_aggregate_changes, plotille_print, visualize_optimal_strategy
-from datetime          import datetime, timedelta
+from utils.rhoodfuncs       import login, get_price, getOptionsByDate, getHistoricals
+from utils.sendmail         import send, create_body
+from utils.plot_stuff       import plot_func, plot_hist
+from strategies.common      import get_profit_func, get_days_left, get_aggregate_changes, plotille_print, visualize_optimal_strategy 
+from datetime               import datetime, timedelta
 
-import json, random, plotille
-# take historical data as input and returns price by day, changes per day, and weights for each change
-def process_historicals(historicals):
-    price   = []
-    changes = []
-    weights = []
-    for i in range(len(historicals)):
-        price.append(float(historicals[i]['close_price']))
-        if(i != 0):
-            changes.append(float(historicals[i]["close_price"]) - float(historicals[i-1]["close_price"]))
-            weights.append(i)
-    return((price, changes, weights))
-
-
-# returns optimal strategy given list of all possible option sets
-def get_optimal_strategy(all_possible_combinations, stock_change_dist, percentages):
-    optimal_strategy    = None
-    optimal_exp_profit  = 0
-    optimal_profit_func = None
-    exp_profit_per_strategy = []
-    for o0, o1, o2, o3 in all_possible_combinations:
-        #if(o0["strike_price"] < current_price * .9 or o3["strike_price"] > current_price * 1.1):
-        #    continue
-
-        profit = get_profit_func(o0, o1, o2, o3)
-
-        exp_profit = 0
-        bin_averages = [current_price + key + .25 for key, val in stock_change_dist.items()]
-        for i in range(len(bin_averages)):
-            exp_profit += percentages[i] * .01 * profit(bin_averages[i])
-
-        # 5% chance we end up at worst case 
-        # exp_profit = exp_profit * .9 + .05 * profit(o0["strike_price"]) + .05 * profit(o3["strike_price"])
-
-        if(o0 and o1 and o2 and o3):
-            exp_profit_per_strategy.append((o0['strike_price'], o1['strike_price'], o2['strike_price'], o3['strike_price'], exp_profit))
-        elif(o0 and o1):
-            exp_profit_per_strategy.append((o0['strike_price'], o1['strike_price'], exp_profit))
-        else:
-            exp_profit_per_strategy.append((o0['strike_price'], exp_profit))
-
-        #if(o0["strike_price"] == 63.0 and o1["strike_price"] == 66.0 and o2["strike_price"] == 68.0 and o3["strike_price"] == 70.0):
-        #    print(o0["strike_price"],o1["strike_price"],o2["strike_price"],o3["strike_price"])
-
-        if(exp_profit > optimal_exp_profit):
-        #    if(o0["strike_price"] == 55.0 and o1["strike_price"] == 58.5 and o2["strike_price"] == 59.0 and o3["strike_price"] == 60.0):
-        #        print(o0["strike_price"],o1["strike_price"],o2["strike_price"],o3["strike_price"])
-
-            optimal_exp_profit = exp_profit
-            optimal_strategy = (o0, o1, o2 ,o3)
-            optimal_profit_func = profit
-
-    return((optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, bin_averages))
+import strategies.first_strat as s1
+import json, random, plotille, argparse
       
-
 if __name__ == "__main__":
+    #get args
+    parser = argparse.ArgumentParser(description="main RHood program")
+    
+    parser.add_argument("--email"  , "-e"  , action="store_true", help="enables an email summary to be sent after execution")
+    parser.add_argument("--execute", "-exe", action="store_true", help="enables automatic execution of optimal trades")
+
+    args = parser.parse_args()
+
     #log in to my account
     login()
 
@@ -76,7 +32,7 @@ if __name__ == "__main__":
     historicals = getHistoricals(stock)
 
     #use historical data to guess a day change
-    price, changes, weights = process_historicals(historicals)
+    price, changes, weights = s1.process_historicals(historicals)
 
     #use changes per day to simulate days_left_to_expiration days
     agg_changes = get_aggregate_changes(changes, weights, days_left_to_expiration)
@@ -96,7 +52,7 @@ if __name__ == "__main__":
     all_possible_2_combinations_flipped = [(b, a, None, None) for a, b, _, __ in all_possible_2_combinations]
     all_singles                         = [(a,None,None,None) for a in options]
     all_possible_combinations = all_possible_2_combinations + all_possible_4_combinations + all_possible_2_combinations_flipped + all_singles
-    optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, bin_averages = get_optimal_strategy(all_possible_combinations, stock_change_dist, percentages)
+    optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, bin_averages = s1.get_optimal_strategy(all_possible_combinations, stock_change_dist, percentages, current_price)
 
     #visualize optimal option strategy
     visualize_optimal_strategy(bin_averages, optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, percentages) 
@@ -112,7 +68,10 @@ if __name__ == "__main__":
     body = create_body(optimal_strategy, images, optimal_exp_profit)
 
     print(body)
-    send("jnasti101@icloud.com", "jo@joeynasti.com", "Daily Summary", body)                                
+    if(args.email):
+        send("jnasti101@icloud.com", "jo@joeynasti.com", "Daily Summary", body)                                
+    else:
+        print("email is disabled!!!!!!!!!")
     
     #   get profit for each price at expiration (step by inc)
     #   integrate stock price dist times profit by price to get expected value for profit
