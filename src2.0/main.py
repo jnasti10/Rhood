@@ -1,42 +1,11 @@
-from utils.rhoodfuncs import login, get_price, getOptionsByDate, getHistoricals
-from utils.sendmail   import send, create_body
-from utils.plot_stuff import plot_func, plot_hist
-from datetime         import datetime, timedelta
+#! /usr/local/bin/python3.8
+from utils.rhoodfuncs  import login, get_price, getOptionsByDate, getHistoricals
+from utils.sendmail    import send, create_body
+from utils.plot_stuff  import plot_func, plot_hist
+from strategies.common import get_profit_func, get_days_left, get_aggregate_changes, plotille_print, visualize_optimal_strategy
+from datetime          import datetime, timedelta
 
 import json, random, plotille
-
-# return a function for profit by price at expiration
-def get_profit_func(o0, o1, o2, o3):
-    if(o2 and o3):
-        price = o0["mark_price"]*1.05 - o1["mark_price"]*.95 - o2["mark_price"]*.95 + o3["mark_price"]*1.05
-        func = lambda x: -price + (x > o0["strike_price"] and x - o0["strike_price"]) - (x > o1["strike_price"] and x - o1["strike_price"]) - (x > o2["strike_price"] and x - o2["strike_price"]) + (x > o3["strike_price"] and x - o3["strike_price"])
-    else:
-        price = o0["mark_price"]*1.05 - o1["mark_price"]*.95
-        func = lambda x: -price + (x > o0["strike_price"] and x - o0["strike_price"]) - (x > o1["strike_price"] and x - o1["strike_price"])
-    
-    return(func)
-
-# returns string for expiration date and days left
-def get_days_left():
-    curr_date = datetime.now().date()
-
-    two_fridays_out = curr_date - timedelta(days = curr_date.weekday()) + timedelta(days=11)
-
-    days_left = (two_fridays_out - curr_date).days
-    if(days_left > 5):
-        days_left -= 2
-    
-    return((days_left, str(two_fridays_out)))
-
-def get_aggregate_changes(day_changes, weights, days_left):
-    agg_changes = []
-    for i in range(100000):
-    #       simulate (date - current date) days
-        agg_changes.append(sum(random.choices(day_changes, weights=weights, k=days_left)))
-    return(agg_changes)
-
-
-
 # take historical data as input and returns price by day, changes per day, and weights for each change
 def process_historicals(historicals):
     price   = []
@@ -49,48 +18,6 @@ def process_historicals(historicals):
             weights.append(i)
     return((price, changes, weights))
 
-#def create_stock_change_dist(agg_change):
-def plotille_print(agg_changes):
-    mx = max(agg_changes)
-    mn = min(agg_changes)
-    inc = .5
-    bucket = mn//inc * inc
-    stock_change_dist = {}
-    num_buckets = 0
-    while(bucket <= mx):
-        stock_change_dist[bucket] = 0
-        bucket += inc
-        num_buckets += 1
-    for c in agg_changes:
-        b = c//inc * inc
-        stock_change_dist[b] += 1
-
-    #   print stuff
-    bins = []
-    percentages = []
-    for key, value in stock_change_dist.items():
-        #print(key, '->', value)
-        bins.append(key)
-        percentages.append(float(value)/1000.0)
-    bins.append(mx//inc * inc + inc)
-
-    print(plotille.histogram(
-        agg_changes,
-        bins=num_buckets,
-        X_label="Price Change",
-        Y_label="%",
-        x_min=(mn//inc * inc),
-        x_max=(mx//inc * inc + inc),
-        lc="blue"
-    ))
-
-    print(plotille.hist_aggregated(
-        counts=percentages,
-        bins=bins,
-        lc='blue'
-    ))
-
-    return(stock_change_dist, percentages)
 
 # returns optimal strategy given list of all possible option sets
 def get_optimal_strategy(all_possible_combinations, stock_change_dist, percentages):
@@ -112,10 +39,12 @@ def get_optimal_strategy(all_possible_combinations, stock_change_dist, percentag
         # 5% chance we end up at worst case 
         # exp_profit = exp_profit * .9 + .05 * profit(o0["strike_price"]) + .05 * profit(o3["strike_price"])
 
-        if(o2 and o3):
+        if(o0 and o1 and o2 and o3):
             exp_profit_per_strategy.append((o0['strike_price'], o1['strike_price'], o2['strike_price'], o3['strike_price'], exp_profit))
-        else:
+        elif(o0 and o1):
             exp_profit_per_strategy.append((o0['strike_price'], o1['strike_price'], exp_profit))
+        else:
+            exp_profit_per_strategy.append((o0['strike_price'], exp_profit))
 
         #if(o0["strike_price"] == 63.0 and o1["strike_price"] == 66.0 and o2["strike_price"] == 68.0 and o3["strike_price"] == 70.0):
         #    print(o0["strike_price"],o1["strike_price"],o2["strike_price"],o3["strike_price"])
@@ -129,22 +58,7 @@ def get_optimal_strategy(all_possible_combinations, stock_change_dist, percentag
             optimal_profit_func = profit
 
     return((optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, bin_averages))
-
-# prints to console option strat summary
-def visualize_optimal_strategy(optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, percentages): 
-    if(optimal_strategy):
-        for o in optimal_strategy:
-            print(json.dumps(o, indent=4))
-        print(plotille.plot(bin_averages, [optimal_profit_func(p) for p in bin_averages]))
-        print(plotille.plot(bin_averages, percentages))
-        print("expected profit: ", optimal_exp_profit)
-        with open("out.txt", "w") as f:
-            for o in exp_profit_per_strategy:
-                if(len(o) == 3):
-                    f.write(f"{o[0]}, {o[1]}, {o[2]} \n")
-                else:    
-                    f.write(f"{o[0]}, {o[1]}, {o[2]}, {o[3]}, {o[4]} \n")
-        
+      
 
 if __name__ == "__main__":
     #log in to my account
@@ -171,22 +85,24 @@ if __name__ == "__main__":
     stock_change_dist, percentages = plotille_print(agg_changes)
 
     #get options available at expiration date
+    print("getting options by date: ", stock, expiration_date)
     options = getOptionsByDate(stock, expiration_date)
     current_price = get_price(stock)
     options = [o for o in options if o["strike_price"] - current_price < max(agg_changes) and o["strike_price"] - current_price > min(agg_changes)]
 
     #loop through all four option combinations, optimize profit
-    all_possible_4_combinations = [(a,b,   c,   d) for i0, a in enumerate(options) for i1, b in enumerate(options[i0+1:]) for i2, c in enumerate(options[i1+i0+2:]) for d in options[i2+i1+i0+3:]]
-    all_possible_2_combinations = [(a,b,None,None) for i0, a in enumerate(options) for b     in           options[i0+1:]]
+    all_possible_4_combinations         = [(a,b,     c,    d) for i0, a in enumerate(options) for i1, b in enumerate(options[i0+1:]) for i2, c in enumerate(options[i1+i0+2:]) for d in options[i2+i1+i0+3:]]
+    all_possible_2_combinations         = [(a,b,  None, None) for i0, a in enumerate(options) for b     in           options[i0+1:]]
     all_possible_2_combinations_flipped = [(b, a, None, None) for a, b, _, __ in all_possible_2_combinations]
-    all_possible_combinations = all_possible_2_combinations + all_possible_4_combinations + all_possible_2_combinations_flipped
+    all_singles                         = [(a,None,None,None) for a in options]
+    all_possible_combinations = all_possible_2_combinations + all_possible_4_combinations + all_possible_2_combinations_flipped + all_singles
     optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, bin_averages = get_optimal_strategy(all_possible_combinations, stock_change_dist, percentages)
 
     #visualize optimal option strategy
-    visualize_optimal_strategy(optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, percentages) 
+    visualize_optimal_strategy(bin_averages, optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, percentages) 
 
     # generate plot images
-    images = ["profit_func.png", "stock_price_pdf.png", "profit_by_pdf.png"]
+    images = [f"profit_func_{days_left_to_expiration}_.png", f"stock_price_pdf_{days_left_to_expiration}_.png", f"profit_by_pdf_{days_left_to_expiration}_.png"]
     plot_func(optimal_profit_func, int(current_price + min(agg_changes)), int(current_price + max(agg_changes)), "/var/www/html/jn/" + images[0])
     plot_hist([current_price + o for o in agg_changes], "/var/www/html/jn/" + images[1], bins=100) 
     pdf_func = lambda x: stock_change_dist[(x - current_price)//.5 * .5]
@@ -196,7 +112,7 @@ if __name__ == "__main__":
     body = create_body(optimal_strategy, images, optimal_exp_profit)
 
     print(body)
-    send("jnasti101@icloud.com", "jo@joeynasti.com", "Option Strat Summary", body)                                
+    send("jnasti101@icloud.com", "jo@joeynasti.com", "Daily Summary", body)                                
     
     #   get profit for each price at expiration (step by inc)
     #   integrate stock price dist times profit by price to get expected value for profit

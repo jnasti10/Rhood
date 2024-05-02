@@ -4,6 +4,7 @@ import robin_stocks.robinhood.stocks  as s
 import pyotp
 import time
 from dotenv import dotenv_values
+import json
 
 def login():
     values = dotenv_values(".env")
@@ -35,8 +36,11 @@ def getOptionsByDate(name, date):
     options["return data"].sort(key=lambda x: float(x["strike_price"]))
     return(options["return data"])
 
-def order_spread(direction, price, symbol, quantity, spread):
+def orderSpread(direction, price, symbol, quantity, spread):
     return(r.orders.order_option_spread(direction, price, symbol, quantity, spread))
+
+def getOrderByID(_id):
+    pass
 
 def getOptionsByPrice(name, price):
     options = o.find_tradable_options(name, expirationDate=None, strikePrice=price, info=None)
@@ -61,3 +65,6 @@ if __name__ == "__main__":
     print(dotenv_values(".env"))
     login()
     print(get_price("UPRO"))
+    #print(json.dumps(orderSpread("debit", 2.00, "UPRO", 1, [{"expirationDate": "2024-05-10", "strike": 61.5, "optionType": "call", "effect": "open", "action": "buy"}]), indent=4))
+    #print(json.dumps(r.account.get_open_stock_positions(), indent=4)) 
+    print(json.dumps(r.orders.get_option_order_info("663159a2-4d84-40e3-a830-3f01ee4c029c"), indent=4))
