@@ -1,5 +1,5 @@
 #! /usr/local/bin/python3.8
-from utils.rhoodfuncs       import login, get_price, getOptionsByDate, getHistoricals
+from utils.rhoodfuncs       import login, get_price, getOptionsByDate, getHistoricals, orderSpread
 from utils.sendmail         import send, create_body
 from utils.plot_stuff       import plot_func, plot_hist
 from strategies.common      import get_profit_func, get_days_left, get_aggregate_changes, plotille_print, visualize_optimal_strategy 
@@ -12,8 +12,8 @@ if __name__ == "__main__":
     #get args
     parser = argparse.ArgumentParser(description="main RHood program")
     
-    parser.add_argument("--email"  , "-e"  , action="store_true", help="enables an email summary to be sent after execution")
-    parser.add_argument("--execute", "-exe", action="store_true", help="enables automatic execution of optimal trades")
+    parser.add_argument("--email"  , "-em"  , action="store_true", help="enables an email summary to be sent after execution")
+    parser.add_argument("--execute", "-ex", action="store_true", help="enables automatic execution of optimal trades")
 
     args = parser.parse_args()
 
@@ -64,15 +64,19 @@ if __name__ == "__main__":
     pdf_func = lambda x: stock_change_dist[(x - current_price)//.5 * .5]
     plot_func(lambda x: optimal_profit_func(x) * pdf_func(x), int(min(list(stock_change_dist.keys())) + current_price + 1), int(max(list(stock_change_dist.keys())) + current_price), "/var/www/html/jn/" + images[2], title="Profit X PDF", ylabel=None)
 
+    # execute trades
+    if(args.execute):
+        spread = s1.create_spread(optimal_strategy)
+        print(json.dumps(spread, indent=4))
+        print(orderSpread(spread["direction"], spread["price"], spread["symbol"], spread["quantity"], spread["spread"]))
     # send the email summary
     body = create_body(optimal_strategy, images, optimal_exp_profit)
 
-    print(body)
+    #print(body)
     if(args.email):
         send("jnasti101@icloud.com", "jo@joeynasti.com", "Daily Summary", body)                                
-    else:
-        print("email is disabled!!!!!!!!!")
     
+    print("Success!") 
     #   get profit for each price at expiration (step by inc)
     #   integrate stock price dist times profit by price to get expected value for profit
     #   keep track of maximized expected profit

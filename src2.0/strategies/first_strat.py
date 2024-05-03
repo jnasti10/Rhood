@@ -52,3 +52,35 @@ def get_optimal_strategy(all_possible_combinations, stock_change_dist, percentag
 
     return((optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, bin_averages))
 
+def create_spread(strat):
+    actions = ["buy", "sell", "sell", "buy"]
+    price = 0
+    spread = []
+    for i in range(len(strat)):
+        if(strat[i]):
+            price += (actions[i] == "buy" and strat[i]['mark_price'] * 1.05) or (actions[i] == "sell" and strat[i]['mark_price'] * -.95) 
+            tmp = {
+                "expirationDate": strat[i]["exp_date"],
+                "strike"         : strat[i]["strike_price"],
+                "optionType"     : "call",
+                "effect"         : "open", 
+                "action"         : actions[i]
+            }
+            spread.append(tmp)
+    
+    if(price > 0):
+        direction = "debit"
+    else:
+        direction = "credit"
+    
+    if(price < 0):
+        price = -price
+
+    return({
+        "direction" : direction,
+        "price"     : round(price, 2),
+        "symbol"    : "UPRO", 
+        "quantity"  : 1,
+        "spread"    : spread
+    })
+
