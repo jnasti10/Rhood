@@ -72,7 +72,7 @@ if __name__ == "__main__":
     # send the email summary
     body = create_body(optimal_strategy, images, optimal_exp_profit)
 
-    #print(body)
+    print(body)
     if(args.email):
         send("jnasti101@icloud.com", "jo@joeynasti.com", "Daily Summary", body)                                
     

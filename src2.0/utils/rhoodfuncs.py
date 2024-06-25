@@ -68,3 +68,4 @@ if __name__ == "__main__":
     #print(json.dumps(orderSpread("debit", 2.00, "UPRO", 1, [{"expirationDate": "2024-05-10", "strike": 61.5, "optionType": "call", "effect": "open", "action": "buy"}]), indent=4))
     #print(json.dumps(r.account.get_open_stock_positions(), indent=4)) 
     print(json.dumps(r.orders.get_option_order_info("663159a2-4d84-40e3-a830-3f01ee4c029c"), indent=4))
+    print(json.dumps(o.get_open_option_positions(), indent=4))
