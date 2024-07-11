@@ -48,8 +48,6 @@ if __name__ == "__main__":
     print("getting options by date: ", stock, expiration_date)
     options = getOptionsByDate(stock, expiration_date)
     current_price = get_price(stock)
-    print(options[0])
-    exit
     #options = [o for o in options if o["strike_price"] - current_price < max(agg_changes) and o["strike_price"] - current_price > min(agg_changes)]
 
     #loop through all four option combinations, optimize profit
@@ -64,7 +62,7 @@ if __name__ == "__main__":
     visualize_optimal_strategy(bin_averages, optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, percentages) 
 
     # generate plot images
-    images = [f"profit_func_{days_left_to_expiration}_.png", f"stock_price_pdf_{days_left_to_expiration}_.png", f"profit_by_pdf_{days_left_to_expiration}_.png"]
+    images = [f"profit_func_{days_left_to_expiration}.png", f"stock_price_pdf_{days_left_to_expiration}.png", f"profit_by_pdf_{days_left_to_expiration}.png"]
     plot_func(optimal_profit_func, int(current_price + min(agg_changes)), int(current_price + max(agg_changes)), "/var/www/html/jn/" + images[0])
     plot_hist([current_price + o for o in agg_changes], "/var/www/html/jn/" + images[1], bins=100) 
     pdf_func = lambda x: stock_change_dist[(x - current_price)//.5 * .5]
@@ -74,7 +72,9 @@ if __name__ == "__main__":
     if(args.execute):
         spread = s1.create_spread(optimal_strategy)
         print(json.dumps(spread, indent=4))
-        trade_data.active_positions[stock].append(orderSpread(spread["direction"], spread["price"], spread["symbol"], spread["quantity"], spread["spread"]))
+        spread_order = orderSpread(spread["direction"], spread["price"], spread["symbol"], spread["quantity"], spread["spread"])
+        print(spread_order)
+        trade_data.active_positions[stock].append(spread_order)
     # send the email summary
     body = create_body(optimal_strategy, images, optimal_exp_profit)
 

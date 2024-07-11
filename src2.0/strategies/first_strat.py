@@ -72,7 +72,7 @@ def create_spread(strat):
     spread = []
     for i in range(len(strat)):
         if(strat[i]):
-            price += (actions[i] == "buy" and strat[i]['mark_price'] * 1.05) or (actions[i] == "sell" and strat[i]['mark_price'] * -.95) 
+            price += (actions[i] == "buy" and strat[i]['high_fill_rate_buy_price']) or (actions[i] == "sell" and strat[i]['high_fill_rate_sell_price']) 
             tmp = {
                 "expirationDate": strat[i]["exp_date"],
                 "strike"         : strat[i]["strike_price"],

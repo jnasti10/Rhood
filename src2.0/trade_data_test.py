@@ -4,16 +4,18 @@ import json
 
 login()
 
-print("obj(1)")
-obj = Trade_data(1)
-obj.print()
-
 print("loading new obj")
+obj = Trade_data(1)
 obj.load()
 obj.print()
 
-_id = obj.active_positions['UPRO'][0]['id']
-print(f"ID = {_id}")
+#obj.remove_active_positions_by_id(["6685e1fe-0bb8-45fe-9142-17a272c6a53f", "6685e5a6-b863-441d-8d01-a0461a869d94"])
+#print("removed bad IDs")
+obj.remove_failed_orders()
+obj.print()
+#obj.save()
+#_id = obj.active_positions['UPRO'][0]['id']
+#print(f"ID = {_id}")
 
-print(json.dumps(getOrderByID(_id), indent=4))
+#print(json.dumps(getOrderByID(_id), indent=4))
 
