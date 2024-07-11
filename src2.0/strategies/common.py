@@ -4,16 +4,23 @@ from datetime import datetime, timedelta
 # return a function for profit by price at expiration
 def get_profit_func(o0, o1, o2, o3):
     if(o0 and o1 and o2 and o3):
-        price = o0["mark_price"]*1.05 - o1["mark_price"]*.95 - o2["mark_price"]*.95 + o3["mark_price"]*1.05
+        price = o0["high_fill_rate_buy_price"] - o1["high_fill_rate_sell_price"] - o2["high_fill_rate_sell_price"] + o3["high_fill_rate_buy_price"]
         func = lambda x: -price + (x > o0["strike_price"] and x - o0["strike_price"]) - (x > o1["strike_price"] and x - o1["strike_price"]) - (x > o2["strike_price"] and x - o2["strike_price"]) + (x > o3["strike_price"] and x - o3["strike_price"])
     elif(o0 and o1):
-        price = o0["mark_price"]*1.05 - o1["mark_price"]*.95
+        price = o0["high_fill_rate_buy_price"] - o1["high_fill_rate_sell_price"]
         func = lambda x: -price + (x > o0["strike_price"] and x - o0["strike_price"]) - (x > o1["strike_price"] and x - o1["strike_price"])
     else:
-        price = o0["mark_price"]*1.05
+        price = o0["high_fill_rate_buy_price"]
         func = lambda x: -price + (x > o0["strike_price"] and x - o0["strike_price"])
     return(func)
 
+# returns max risk given profit func
+def get_risk(profit):
+    if(profit(0) > profit(999999999999)):
+        return(-profit(9999999999999))
+    else:
+        return(-profit(0))
+    
 # returns string for expiration date and days left
 def get_days_left():
     curr_date = datetime.now().date()
@@ -87,10 +94,10 @@ def visualize_optimal_strategy(bin_averages, optimal_strategy, optimal_exp_profi
         print("expected profit: ", optimal_exp_profit)
         with open("out.txt", "w") as f:
             for o in exp_profit_per_strategy:
-                if(len(o) == 3):
-                    f.write(f"{o[0]}, {o[1]}, {o[2]} \n")
-                elif(len(o) == 2):
-                    f.write(f"{o[0]}, {o[1]} \n")
+                if(len(o) == 4):
+                    f.write(f"{o[0]}, {o[1]}, {o[2]}, {o[3]}\n")
+                elif(len(o) == 3):
+                    f.write(f"{o[0]}, {o[1]}, {o[2]}\n")
                 else:    
-                    f.write(f"{o[0]}, {o[1]}, {o[2]}, {o[3]}, {o[4]} \n")
+                    f.write(f"{o[0]}, {o[1]}, {o[2]}, {o[3]}, {o[4]}, {o[5]}\n")
   

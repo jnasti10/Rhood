@@ -1,5 +1,6 @@
 *.log
 *.txt
+*.obj
 .git_key
 .env
 __pycache__

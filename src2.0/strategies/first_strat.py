@@ -1,4 +1,5 @@
 from strategies.common import * 
+import json
 
 # take historical data as input and returns price by day, changes per day, and weights for each change
 def process_historicals(historicals):
@@ -15,7 +16,8 @@ def process_historicals(historicals):
 # returns optimal strategy given list of all possible option sets
 def get_optimal_strategy(all_possible_combinations, stock_change_dist, percentages, current_price):
     optimal_strategy    = None
-    optimal_exp_profit  = 0
+    risk  = 0
+    optimal_exp_profit_by_risk = 0
     optimal_profit_func = None
     exp_profit_per_strategy = []
     for o0, o1, o2, o3 in all_possible_combinations:
@@ -23,6 +25,7 @@ def get_optimal_strategy(all_possible_combinations, stock_change_dist, percentag
         #    continue
 
         profit = get_profit_func(o0, o1, o2, o3)
+        risk   = get_risk(profit)
 
         exp_profit = 0
         bin_averages = [current_price + key + .25 for key, val in stock_change_dist.items()]
@@ -33,24 +36,35 @@ def get_optimal_strategy(all_possible_combinations, stock_change_dist, percentag
         # exp_profit = exp_profit * .9 + .05 * profit(o0["strike_price"]) + .05 * profit(o3["strike_price"])
 
         if(o0 and o1 and o2 and o3):
-            exp_profit_per_strategy.append((o0['strike_price'], o1['strike_price'], o2['strike_price'], o3['strike_price'], exp_profit))
+            price = o0['high_fill_rate_buy_price'] - o1['high_fill_rate_sell_price'] - o2['high_fill_rate_sell_price'] + o3['high_fill_rate_buy_price'] 
+            exp_profit_per_strategy.append((o0['strike_price'], o1['strike_price'], o2['strike_price'], o3['strike_price'], exp_profit, price))
         elif(o0 and o1):
-            exp_profit_per_strategy.append((o0['strike_price'], o1['strike_price'], exp_profit))
+            price = o0['high_fill_rate_buy_price'] - o1['high_fill_rate_sell_price'] 
+            exp_profit_per_strategy.append((o0['strike_price'], o1['strike_price'], exp_profit, price))
         else:
-            exp_profit_per_strategy.append((o0['strike_price'], exp_profit))
+            price = o0['high_fill_rate_buy_price']  
+            exp_profit_per_strategy.append((o0['strike_price'], exp_profit, price))
 
         #if(o0["strike_price"] == 63.0 and o1["strike_price"] == 66.0 and o2["strike_price"] == 68.0 and o3["strike_price"] == 70.0):
         #    print(o0["strike_price"],o1["strike_price"],o2["strike_price"],o3["strike_price"])
 
-        if(exp_profit > optimal_exp_profit):
+        if(exp_profit / risk > optimal_exp_profit_by_risk):
         #    if(o0["strike_price"] == 55.0 and o1["strike_price"] == 58.5 and o2["strike_price"] == 59.0 and o3["strike_price"] == 60.0):
         #        print(o0["strike_price"],o1["strike_price"],o2["strike_price"],o3["strike_price"])
 
-            optimal_exp_profit = exp_profit
+            """print("new optimal strategy!!!!")
+            for o in (o0,o1,o2,o3):
+                if(o):
+                    print(json.dumps(o, indent=4))
+            print(f"risk       = {risk}")
+            print(f"exp_profit = {exp_profit}")
+            print(f"new optimal profit/risk = {exp_profit/risk}")
+            """
+            optimal_exp_profit_by_risk = exp_profit / risk
             optimal_strategy = (o0, o1, o2 ,o3)
             optimal_profit_func = profit
 
-    return((optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, bin_averages))
+    return((optimal_strategy, optimal_exp_profit_by_risk, optimal_profit_func, exp_profit_per_strategy, bin_averages))
 
 def create_spread(strat):
     actions = ["buy", "sell", "sell", "buy"]
@@ -75,6 +89,8 @@ def create_spread(strat):
     
     if(price < 0):
         price = -price
+
+    price = round(price, 1)
 
     return({
         "direction" : direction,

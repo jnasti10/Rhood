@@ -21,18 +21,19 @@ def getOptionsByDate(name, date):
             mrkt_data = o.get_option_market_data_by_id(option["id"])
             options["market data"].append(mrkt_data)
             if(mrkt_data):
-                tmp = {
-                    "strike_price"             : float(option["strike_price"]),
-                    "exp_date"                 : option["expiration_date"],
-                    "mark_price"               : float(options["market data"][-1][0]["adjusted_mark_price"]),
-                    "bid_price"                : float(options["market data"][-1][0]["adjusted_mark_price"]),
-                    "ask_price"                : float(options["market data"][-1][0]["adjusted_mark_price"]),
-                    "delta"                    : float(options["market data"][-1][0]["delta"]),
-                    "theta"                    : float(options["market data"][-1][0]["theta"]),
-                    "high_fill_rate_buy_price" : options["market data"][-1][0]["high_fill_rate_buy_price"],
-                    "high_fill_rate_sell_price": options["market data"][-1][0]["high_fill_rate_sell_price"]
-                }
-                options["return data"].append(tmp)
+                if(options["market data"][-1][0]["high_fill_rate_buy_price"]):
+                    tmp = {
+                        "strike_price"             : float(option["strike_price"]),
+                        "exp_date"                 : option["expiration_date"],
+                        "mark_price"               : float(options["market data"][-1][0]["adjusted_mark_price"]),
+                        "bid_price"                : float(options["market data"][-1][0]["bid_price"]),
+                        "ask_price"                : float(options["market data"][-1][0]["ask_price"]),
+                        "delta"                    : float(options["market data"][-1][0]["delta"]),
+                        "theta"                    : float(options["market data"][-1][0]["theta"]),
+                        "high_fill_rate_buy_price" : float(options["market data"][-1][0]["high_fill_rate_buy_price"]),
+                        "high_fill_rate_sell_price": float(options["market data"][-1][0]["high_fill_rate_sell_price"])
+                    }
+                    options["return data"].append(tmp)
     options["return data"].sort(key=lambda x: float(x["strike_price"]))
     return(options["return data"])
 
@@ -40,7 +41,7 @@ def orderSpread(direction, price, symbol, quantity, spread):
     return(r.orders.order_option_spread(direction, price, symbol, quantity, spread))
 
 def getOrderByID(_id):
-    pass
+    return(r.orders.get_option_order_info(_id))
 
 def getOptionsByPrice(name, price):
     options = o.find_tradable_options(name, expirationDate=None, strikePrice=price, info=None)

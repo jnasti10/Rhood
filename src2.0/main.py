@@ -2,6 +2,7 @@
 from utils.rhoodfuncs       import login, get_price, getOptionsByDate, getHistoricals, orderSpread
 from utils.sendmail         import send, create_body
 from utils.plot_stuff       import plot_func, plot_hist
+from utils.trade_data       import Trade_data
 from strategies.common      import get_profit_func, get_days_left, get_aggregate_changes, plotille_print, visualize_optimal_strategy 
 from datetime               import datetime, timedelta
 
@@ -21,11 +22,14 @@ if __name__ == "__main__":
     login()
 
     #load pickled data
-    pass
+    trade_data = Trade_data(10000)
+    trade_data.load()
     ##################
 
     # chose stock to simulate
     stock = "UPRO"
+    if(stock not in trade_data.active_positions):
+        trade_data.active_positions[stock] = []
     days_left_to_expiration, expiration_date = get_days_left()
 
     #get historical data for stock
@@ -44,7 +48,9 @@ if __name__ == "__main__":
     print("getting options by date: ", stock, expiration_date)
     options = getOptionsByDate(stock, expiration_date)
     current_price = get_price(stock)
-    options = [o for o in options if o["strike_price"] - current_price < max(agg_changes) and o["strike_price"] - current_price > min(agg_changes)]
+    print(options[0])
+    exit
+    #options = [o for o in options if o["strike_price"] - current_price < max(agg_changes) and o["strike_price"] - current_price > min(agg_changes)]
 
     #loop through all four option combinations, optimize profit
     all_possible_4_combinations         = [(a,b,     c,    d) for i0, a in enumerate(options) for i1, b in enumerate(options[i0+1:]) for i2, c in enumerate(options[i1+i0+2:]) for d in options[i2+i1+i0+3:]]
@@ -68,14 +74,17 @@ if __name__ == "__main__":
     if(args.execute):
         spread = s1.create_spread(optimal_strategy)
         print(json.dumps(spread, indent=4))
-        print(orderSpread(spread["direction"], spread["price"], spread["symbol"], spread["quantity"], spread["spread"]))
+        trade_data.active_positions[stock].append(orderSpread(spread["direction"], spread["price"], spread["symbol"], spread["quantity"], spread["spread"]))
     # send the email summary
     body = create_body(optimal_strategy, images, optimal_exp_profit)
 
-    print(body)
+    #print(body)
     if(args.email):
         send("jnasti101@icloud.com", "jo@joeynasti.com", "Daily Summary", body)                                
     
+
+    # save data and exit
+    trade_data.save()
     print("Success!") 
     #   get profit for each price at expiration (step by inc)
     #   integrate stock price dist times profit by price to get expected value for profit
