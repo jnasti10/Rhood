@@ -53,7 +53,7 @@ class Trade_data():
         s += " total_value = " + str(self.total_value) + "\n"
         s += " cash        = " + str(self.cash) + "\n"
         s += "========== active pos ==========\n" + json.dumps(self.active_positions, indent=4) + "\n"
-        s += " history_db  = " + str(self.history_db) + "\n"
+        s += " history_db  = " + json.dumps(self.history_db, indent=4) + "\n"
         print(s)
 
 if(__name__ == "__main__"):
