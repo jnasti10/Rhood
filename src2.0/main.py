@@ -18,6 +18,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    email   = args.email
+    execute = args.execute
+
     #log in to my account
     login()
 
@@ -73,7 +76,7 @@ if __name__ == "__main__":
         plot_func(lambda x: optimal_profit_func(x) * pdf_func(x), int(min(list(stock_change_dist.keys())) + current_price + 1), int(max(list(stock_change_dist.keys())) + current_price), "/var/www/html/jn/" + images[2], title="Profit X PDF", ylabel=None)
 
         # execute trades
-        if(args.execute):
+        if(execute):
             spread = s1.create_spread(optimal_strategy, stock)
             #print(json.dumps(spread, indent=4))
             spread_order = orderSpread(spread["direction"], spread["price"], spread["symbol"], spread["quantity"], spread["spread"])
@@ -83,7 +86,7 @@ if __name__ == "__main__":
         body = create_body(optimal_strategy, images, optimal_exp_profit)
 
         print(body)
-        if(args.email):
+        if(email):
             send("jnasti101@icloud.com", "jo@joeynasti.com", f"{stock} Summary", body)                                
         
 
