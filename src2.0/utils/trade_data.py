@@ -24,19 +24,19 @@ class Trade_data():
         else:
             print("No trade_data.obj, nothing to do")
 
-    def remove_active_positions_by_id(self, ids):
+    def remove_active_positions_by_id(self, ids, stock):
         for id_ in ids:
-            for ac in self.active_positions['UPRO']:
+            for ac in self.active_positions[stock]:
                 if('id' in ac and ac['id'] == id_):
-                    self.active_positions['UPRO'].remove(ac)
+                    self.active_positions[stock].remove(ac)
                 
-    def remove_failed_orders(self):
+    def remove_failed_orders(self, stock):
         remove_these = []
-        for ac in self.active_positions['UPRO']:
+        for ac in self.active_positions[stock]:
             if('id' not in ac):
                 remove_these.append(ac)
         for rm in remove_these:
-            self.active_positions['UPRO'].remove(rm)
+            self.active_positions[stock].remove(rm)
 
     def copy(self, obj):
         self.pickle_file      = obj.pickle_file

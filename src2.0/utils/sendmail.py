@@ -118,7 +118,7 @@ BODY_HTML = """
 <body>
 
 <div class="container">
-    <h1>UPRO Option Strategy</h1>
+    <h1>Option Strategy</h1>
     <div class="option-info">
         <ul class="options-list">
             <li class="option-item">

@@ -4,6 +4,8 @@ import json
 
 obj = Trade_data(1)
 obj.load()
+obj.print()
+exit()
 del obj.history_db['new']
 
 buy  = obj.active_positions["UPRO"][0]

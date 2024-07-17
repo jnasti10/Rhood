@@ -20,10 +20,12 @@ def get_optimal_strategy(all_possible_combinations, stock_change_dist, percentag
     optimal_exp_profit_by_risk = 0
     optimal_profit_func = None
     exp_profit_per_strategy = []
+    iteration = 0
     for o0, o1, o2, o3 in all_possible_combinations:
         #if(o0["strike_price"] < current_price * .9 or o3["strike_price"] > current_price * 1.1):
         #    continue
-
+        iteration += 1.0
+        print(round(iteration/len(all_possible_combinations)*100, 2), end='%%\r')
         profit = get_profit_func(o0, o1, o2, o3)
         risk   = get_risk(profit)
 
@@ -66,7 +68,7 @@ def get_optimal_strategy(all_possible_combinations, stock_change_dist, percentag
 
     return((optimal_strategy, optimal_exp_profit_by_risk, optimal_profit_func, exp_profit_per_strategy, bin_averages))
 
-def create_spread(strat):
+def create_spread(strat, stock):
     actions = ["buy", "sell", "sell", "buy"]
     price = 0
     spread = []
@@ -95,7 +97,7 @@ def create_spread(strat):
     return({
         "direction" : direction,
         "price"     : round(price, 2),
-        "symbol"    : "UPRO", 
+        "symbol"    : stock, 
         "quantity"  : 1,
         "spread"    : spread
     })
