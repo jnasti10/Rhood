@@ -1,13 +1,11 @@
+#! /usr/local/bin/python3.8
 from utils.trade_data import Trade_data
 from utils.rhoodfuncs import getOrderByID, login
 import json
 
 obj = Trade_data(1)
 obj.load()
-obj.print()
-exit()
-del obj.history_db['new']
-
+"""
 buy  = obj.active_positions["UPRO"][0]
 sell = obj.history_db["UPRO"][0]
 
@@ -32,4 +30,6 @@ out = {
 obj.history_db["UPRO"][0] = out
 
 del obj.active_positions["UPRO"][0]
+"""
+#obj.remove_active_positions_by_id(["6697ce6a-9159-4099-89ee-2851868869ea", "66987662-c736-4639-97df-1b3e3764532f", "669879ce-580b-4c46-8574-4313b092caf0"], "UPRO")
 obj.print()

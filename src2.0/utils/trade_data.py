@@ -25,10 +25,19 @@ class Trade_data():
             print("No trade_data.obj, nothing to do")
 
     def remove_active_positions_by_id(self, ids, stock):
+        remove_these = []
         for id_ in ids:
+            print("checking for ID ", id_)
             for ac in self.active_positions[stock]:
-                if('id' in ac and ac['id'] == id_):
-                    self.active_positions[stock].remove(ac)
+                if('id' in ac):
+                    print("current ID ", ac['id'])
+                    if(ac['id'] == id_):
+                        print("Found ID: ", id_)
+                        remove_these.append(ac)
+        for rm in remove_these:
+            print("removing ", rm["id"])
+            self.active_positions[stock].remove(rm)
+            print("removed.")
                 
     def remove_failed_orders(self, stock):
         remove_these = []
