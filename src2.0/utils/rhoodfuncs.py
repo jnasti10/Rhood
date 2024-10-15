@@ -11,6 +11,9 @@ def login():
     totp = pyotp.TOTP(values["TOTP"]).now()
     login = r.login(values["USERNAME"], values["PASSWORD"], mfa_code=totp)
 
+def getOptionOrders():
+    return(r.orders.get_all_option_orders())
+
 def getOptionsByDate(name, date):
     options = {}
     options["trdble data"] = o.find_tradable_options(name, expirationDate=date, strikePrice=None, info=None)

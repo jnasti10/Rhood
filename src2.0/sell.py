@@ -15,10 +15,10 @@ if __name__ == "__main__":
 
     spread = {}
     
-    spread['direction'] = "credit" # opposite of info["direction"]
-    spread['price']     =  2       # current price
-    spread['symbol']    = "UPRO"
-    spread['quantity']  = 1        # info quantity
+    spread['direction'] = (info["direction"] == "credit") and "debit" or "credit" # opposite of info["direction"]
+    spread['price']     =  2                      # current price
+    spread['symbol']    = info["chain_symbol"]
+    spread['quantity']  = info["quantity"]        # info quantity
     spread['spread']    = [
         {
             "expirationDate": "2024-07-12",
