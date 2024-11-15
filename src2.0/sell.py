@@ -1,4 +1,4 @@
-from utils.rhoodfuncs import getOrderByID, login, orderSpread
+from utils.rhoodfuncs import getOrderByID, login, orderSpread, getOptionPositions
 from utils.trade_data import Trade_data
 import json
 
@@ -7,39 +7,36 @@ if __name__ == "__main__":
 
     data = Trade_data(1)
     data.load()
-
     data.print()
-
-    info = getOrderByID("6686aaed-2f68-455a-84e2-06a128a28baa")
-    print(json.dumps(info, indent=4))
-
-    spread = {}
     
-    spread['direction'] = (info["direction"] == "credit") and "debit" or "credit" # opposite of info["direction"]
-    spread['price']     =  2                      # current price
-    spread['symbol']    = info["chain_symbol"]
-    spread['quantity']  = info["quantity"]        # info quantity
-    spread['spread']    = [
-        {
-            "expirationDate": "2024-07-12",
-            "strike": "84.0000",
-            "optionType": "call",
-            "effect" : "close",
-            "action" : "buy"
-        },
-        {
-            "expirationDate": "2024-07-12",
-            "strike": "80.0000",
-            "optionType": "call",
-            "effect" : "close",
-            "action" : "sell"
-        }
-    ]
+    #print(json.dumps(getOrderByID("671118e4-d102-4165-925d-c657f9165c2d"), indent=4))
+    for stock, active_positions in data.active_positions.items():
+        for info in active_positions:
+            order = {}
 
-    new_order = orderSpread(spread["direction"], spread["price"], spread["symbol"], spread["quantity"], spread["spread"])
+            order['direction'] = (info["direction"] == "credit") and "debit" or "credit" 
+            order['symbol']    = stock
+            order['quantity']  = info["quantity"]
+            order['spread']    = []
 
-    data.history_db["new"] = new_order
+            for each leg...
+                {
+                    "expirationDate": "2024-07-12",
+                    "strike": "84.0000",
+                    "optionType": "call",
+                    "effect" : "close",
+                    "action" : "buy"
+                },
+                {
+                    "expirationDate": "2024-07-12",
+                    "strike": "80.0000",
+                    "optionType": "call",
+                    "effect" : "close",
+                    "action" : "sell"
+                }
 
-    print("-=-=-=-=-=-=-=-=-=-=--=-==-=-=-=-=-=-====-=\n\n\n\n\n-=-=-=-=-=-=-=-=--==-=-=-==-")
-    data.print()
-    data.save()
+            
+        
+            order['price']  = get_price()######                       
+            
+            #new_order = orderSpread(order["direction"], order["price"], order["symbol"], order["quantity"], order["spread"])

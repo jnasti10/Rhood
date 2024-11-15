@@ -121,10 +121,14 @@ def create_spread(strat, stock):
 
 def main(stocks, email, execute, test, trade_data):
     for stock in stocks:
+
         if(stock not in trade_data.active_positions):
             trade_data.active_positions[stock] = []
         if(stock not in trade_data.history_db):
             trade_data.history_db[stock] = []
+        if(stock not in trade_data.pending_positions):
+            trade_data.pending_positions[stock] = []
+
         days_left_to_expiration, expiration_date = get_days_left()
 
         #get historical data for stock
@@ -170,7 +174,7 @@ def main(stocks, email, execute, test, trade_data):
             print(json.dumps(spread, indent=4))
             spread_order = orderSpread(spread["direction"], spread["price"], spread["symbol"], spread["quantity"], spread["spread"])
             print(spread_order)
-            trade_data.active_positions[stock].append(spread_order)
+            trade_data.pending_positions[stock].append(spread_order)
         # send the email summary
         body = create_body(optimal_strategy, images, optimal_exp_profit)
 

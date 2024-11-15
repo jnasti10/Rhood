@@ -9,6 +9,7 @@ class Trade_data():
         self.total_value      = principle
         self.cash             = principle
         self.active_positions = {}
+        self.pending_positions = {}
         self.history_db       = {}
 
     def save(self):
@@ -48,12 +49,13 @@ class Trade_data():
             self.active_positions[stock].remove(rm)
 
     def copy(self, obj):
-        self.pickle_file      = obj.pickle_file
-        self.principle        = obj.principle
-        self.total_value      = obj.total_value
-        self.cash             = obj.cash
-        self.active_positions = obj.active_positions
-        self.history_db       = obj.history_db
+        self.pickle_file       = obj.pickle_file
+        self.principle         = obj.principle
+        self.total_value       = obj.total_value
+        self.cash              = obj.cash
+        self.active_positions  = obj.active_positions
+        self.pending_positions = obj.pending_positions
+        self.history_db        = obj.history_db
         
     def print(self):
         s  = "========== TRADE DATA ==========\n"
@@ -61,6 +63,7 @@ class Trade_data():
         s += " princple    = " + str(self.principle) + "\n"
         s += " total_value = " + str(self.total_value) + "\n"
         s += " cash        = " + str(self.cash) + "\n"
+        s += "========= pending pos =========\n" + json.dumps(self.pending_positions, indent=4)
         s += "========== active pos ==========\n" + json.dumps(self.active_positions, indent=4) + "\n"
         s += " history_db  = " + json.dumps(self.history_db, indent=4) + "\n"
         print(s)
