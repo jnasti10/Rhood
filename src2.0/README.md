@@ -26,7 +26,7 @@ This repository contains a Python-based trading bot that interacts with the Robi
     ├── sendmail.py         # Email sending functions using AWS SES
     ├── trade_data.obj      # Pickle file for persisting trade data
     └── trade_data.py       # Class for managing trade data and positions
-
+```
 ## Setup
 
 1. **Install Dependencies**
