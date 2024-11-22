@@ -2,12 +2,13 @@ from utils.rhoodfuncs import getOrderByID, login
 from utils.trade_data import Trade_data
 from utils.sendmail import send
 from utils.execmailtemplate import ExecutionMailTemplate
+from utils.summarymailtemplate import SummaryMailTemplate
 import json
 
 def send_execution_email(order_info):
     """Send an email notification for a successfully executed trade."""
     recipient = "jnasti101@icloud.com"
-    sender = "!!!TradeExecuted!!!@joeynasti.com"
+    sender = "!!TradeExecuted!!@joeynasti.com"
     subject = f"Trade Executed: {order_info['chain_symbol']} - {order_info['strategy']}"
     
     # Construct the email body using a new template
@@ -16,12 +17,24 @@ def send_execution_email(order_info):
     
     # Send the email
     send(to=recipient, frm=sender, subject=subject, body=body)
-    print("Succesfully Sent!! body:\n" + body)
+
+def send_summary_email(data):
+    """Send an email summarizing current positions."""
+    recipient = "jnasti101@icloud.com"
+    sender = "!Summary!@joeynasti.com"
+    subject = "Daily Summary: Current Pending and Active Positions"
+    
+    # Construct the email body using a new template
+    body_template = SummaryMailTemplate()
+    body = body_template.create_summary_email(data.pending_positions, data.active_positions)
+    
+    # Send the email
+    send(to=recipient, frm=sender, subject=subject, body=body)
 
 def get_data():
     data = Trade_data(1)
     data.load()
-    return(data)
+    return data
 
 def main(mock_data=None):
     # Step 1: Log in to Robinhood
@@ -68,11 +81,6 @@ def main(mock_data=None):
             # Send email notification
             send_execution_email(executed_order)
 
-        # Check if the order was canceled
-        #elif info.get("state") == "canceled":
-        #    print(f"Order {pending_order['id']} was canceled.")
-        #    remove_these.append(i)
-
     # Step 5: Remove processed orders from pending_positions
     for index in sorted(remove_these, reverse=True):
         del data.pending_positions[stock][index]
@@ -83,6 +91,9 @@ def main(mock_data=None):
     # Step 7: Print updated trade data for verification
     print("Updated Trade Data:")
     data.print()
+
+    # Step 8: Send summary email
+    send_summary_email(data)
 
 
 if __name__ == "__main__":
