@@ -26,50 +26,54 @@ This repository contains a Python-based trading bot that interacts with the Robi
     ├── sendmail.py         # Email sending functions using AWS SES
     ├── trade_data.obj      # Pickle file for persisting trade data
     └── trade_data.py       # Class for managing trade data and positions
-
+```
 ## Setup
 
 1. **Install Dependencies**
    ```bash
    pip install robin-stocks boto3 matplotlib numpy python-dotenv pyotp pillow
-Environment Variables Create a .env file with the following content to store sensitive information:
-
+2. **Environment Variables**
+    Create a .env file with the following content to store sensitive information:
+```
 USERNAME=<your_robinhood_username>
 PASSWORD=<your_robinhood_password>
 TOTP=<your_totp_secret>
-Amazon SES Setup
+```
+3. **Amazon SES Setup**
 
-Configure Amazon Simple Email Service (SES) in your AWS account for sending emails.
-Ensure your email addresses (sender and receiver) are verified in SES, especially if in a sandbox environment.
-Usage
-Main Bot Execution
+* Configure Amazon Simple Email Service (SES) in your AWS account for sending emails.
+* Ensure your email addresses (sender and receiver) are verified in SES, especially if in a sandbox environment.
 
-Run main.py to execute the bot’s core functions, including checking orders, placing trades, and generating email summaries.
-Monitor Pending Orders
+## Usage
+1. Main Bot Execution
 
-Use monitor_pending.py to track the status of pending orders, updating them as they are executed or canceled.
-Sell Orders
+* Run main.py to execute the bot’s core functions, including checking orders, placing trades, and generating email summaries.
+2. Monitor Pending Orders
 
-Run sell.py to handle any sell orders, especially for positions that need to be closed.
-Testing
+* Use monitor_pending.py to track the status of pending orders, updating them as they are executed or canceled.
+3. Sell Orders
 
-Run tests in the tests directory to verify the functionality of different components.
-trade_data_test.py specifically tests the functionality in trade_data.py.
-Strategies
+* Run sell.py to handle any sell orders, especially for positions that need to be closed.
+4. Testing
 
-The strategies directory contains the trading strategies. first_strat.py and first_strat_v2.py represent different implementations.
-common.py holds utility functions shared across strategies.
-Email Summaries
+* Run tests in the tests directory to verify the functionality of different components.
+* trade_data_test.py specifically tests the functionality in trade_data.py.
+5. Strategies
 
-The utils/mailtemplate.py file defines an HTML email template that summarizes trading activities.
-Use sendmail.py to send the generated email summaries via AWS SES.
-Plotting and Visualization
+* The strategies directory contains the trading strategies. first_strat.py and first_strat_v2.py represent different implementations.
+* common.py holds utility functions shared across strategies.
+6. Email Summaries
 
-The utils/plot_stuff.py script provides functions for generating line and histogram plots.
-Plots can be saved as images for use in email reports.
-Example Code
-Sending an Email Summary
+* The utils/mailtemplate.py file defines an HTML email template that summarizes trading activities.
+* Use sendmail.py to send the generated email summaries via AWS SES.
+7. Plotting and Visualization
 
+* The utils/plot_stuff.py script provides functions for generating line and histogram plots.
+* Plots can be saved as images for use in email reports.
+## Example Code
+**Sending an Email Summary**
+
+```python 
 from utils.mailtemplate import MailTemplate
 from utils.sendmail import send, create_body
 
@@ -89,22 +93,24 @@ body = tmplt.create_body(strategy, images, expected_profit)
 
 # Send email
 send("recipient@example.com", "sender@example.com", "Trading Bot Update", body)
-Generating a Plot
-
+```
+## Generating a Plot
+```python
 from utils.plot_stuff import plot_func
 
 # Define a profit function and plot range
 profit_function = lambda x: (x < -5 and x - 1) or (x < 5 and -6) or (-11 + x)
 plot_func(profit_function, -15, 25, 'profit_plot.png')
-Dependencies
-robin-stocks: For interacting with the Robinhood API.
-boto3: For sending emails via Amazon SES.
-matplotlib and numpy: For generating plots.
-pyotp: For generating TOTP codes for two-factor authentication.
-python-dotenv: For managing environment variables.
-Pillow: For handling images.
-License
+```
+## Dependencies
+* robin-stocks: For interacting with the Robinhood API.
+* boto3: For sending emails via Amazon SES.
+* matplotlib and numpy: For generating plots.
+* pyotp: For generating TOTP codes for two-factor authentication.
+* python-dotenv: For managing environment variables.
+* Pillow: For handling images.
+## License
 This project is licensed under the MIT License.
 
-Disclaimer
+## Disclaimer
 This code is intended for educational purposes only. Trading in financial markets involves risk, and it is recommended to perform thorough research or consult a financial advisor before using an automated trading bot.
