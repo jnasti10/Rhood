@@ -148,6 +148,7 @@ def main(stocks, email, execute, test, trade_data):
         options = getOptionsByDate(stock, expiration_date)
         current_price = get_price(stock)
         options = [o for o in options if o["strike_price"] - current_price < max(agg_changes) and o["strike_price"] - current_price > min(agg_changes)]
+        options = [o for o in options if o["mark_price"] > .5] 
 
         #loop through all four option combinations, optimize profit
         all_possible_4_combinations         = [(a,b,     c,    d) for i0, a in enumerate(options) for i1, b in enumerate(options[i0+1:]) for i2, c in enumerate(options[i1+i0+2:]) for d in options[i2+i1+i0+3:]]

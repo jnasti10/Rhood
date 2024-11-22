@@ -5,6 +5,9 @@ import json
 if __name__ == "__main__":
     login()
 
+    print(json.dumps(getOrderByID("673deb6f-7d0c-4058-bc21-e09e0bce7a73"), indent=4))
+    exit()
+"""
     data = Trade_data(1)
     data.load()
     data.print()
@@ -38,5 +41,5 @@ if __name__ == "__main__":
             
         
             order['price']  = get_price()######                       
-            
+            """
             #new_order = orderSpread(order["direction"], order["price"], order["symbol"], order["quantity"], order["spread"])

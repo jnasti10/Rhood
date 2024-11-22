@@ -31,11 +31,8 @@ if __name__ == "__main__":
     ##################
 
     # chose stock to simulate
-    stocks = ["UPRO", "TSLA"]
+    stocks = ["UPRO"]
     
     #### s1 main ####
     s1.main(stocks, email, execute, test, trade_data)
-        #   get profit for each price at expiration (step by inc)
-        #   integrate stock price dist times profit by price to get expected value for profit
-        #   keep track of maximized expected profit
 
