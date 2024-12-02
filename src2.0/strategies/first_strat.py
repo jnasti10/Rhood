@@ -1,5 +1,5 @@
 from strategies.common import * 
-from utils.rhoodfuncs  import login, get_price, getOptionsByDate, getHistoricals, orderSpread
+from utils.rhoodfuncs  import login, get_price, getOptionsByDate, getHistoricals, orderSpread, trimOrder
 from utils.sendmail    import send, create_body
 from utils.plot_stuff  import plot_func, plot_hist
 from utils.trade_data  import Trade_data
@@ -169,19 +169,23 @@ def main(stocks, email, execute, test, trade_data):
         pdf_func = lambda x: stock_change_dist[(x - current_price)//.5 * .5]
         plot_func(lambda x: optimal_profit_func(x) * pdf_func(x), int(min(list(stock_change_dist.keys())) + current_price + 1), int(max(list(stock_change_dist.keys())) + current_price), "/var/www/html/jn/" + images[2], title="Profit X PDF", ylabel=None)
 
+        # send the email summary
+        body = create_body(optimal_strategy, images, optimal_exp_profit)
+
+        print(body)
+        if(email):
+            send("jnasti101@icloud.com", "jo@joeynasti.com", f"{stock} Summary", body)   
+
         # execute trades
         if(execute):
             spread = create_spread(optimal_strategy, stock)###
             print(json.dumps(spread, indent=4))
             spread_order = orderSpread(spread["direction"], spread["price"], spread["symbol"], spread["quantity"], spread["spread"])
             print(spread_order)
-            trade_data.pending_positions[stock].append(spread_order)
-        # send the email summary
-        body = create_body(optimal_strategy, images, optimal_exp_profit)
-
-        print(body)
-        if(email):
-            send("jnasti101@icloud.com", "jo@joeynasti.com", f"{stock} Summary", body)                                
+            if('id' not in spread_order):
+                print("!!ERROR!! Order did not go through")
+            else:
+                trade_data.pending_positions[stock].append(trimOrder(spread_order))                             
         
 
         # save data and exit

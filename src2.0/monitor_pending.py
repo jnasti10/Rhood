@@ -1,4 +1,4 @@
-from utils.rhoodfuncs import getOrderByID, login
+from utils.rhoodfuncs import getOrderByID, login, trimOrder
 from utils.trade_data import Trade_data
 from utils.sendmail import send
 from utils.execmailtemplate import ExecutionMailTemplate
@@ -98,3 +98,4 @@ def main(mock_data=None):
 
 if __name__ == "__main__":
     main()
+

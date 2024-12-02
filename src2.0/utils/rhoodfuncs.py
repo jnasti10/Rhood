@@ -46,6 +46,36 @@ def orderSpread(direction, price, symbol, quantity, spread):
 def getOrderByID(_id):
     return(r.orders.get_option_order_info(_id))
 
+def trimOrder(order):
+    ret_order = {
+            "canceled_quantity": order["canceled_quantity"],
+            "created_at": order["created_at"],
+            "direction": order["direction"],
+            "id": order["id"],
+            "legs": [],
+            "pending_quantity": order["pending_quantity"],
+            "premium": order["premium"],
+            "net_amount": order["net_amount"],
+            "price": order["price"],
+            "processed_quantity": order["processed_quantity"],
+            "quantity": order["quantity"],
+            "state": order["state"],
+            "chain_symbol": order["chain_symbol"],
+            "strategy": order["strategy"]
+        }
+
+    for leg in order["legs"]:
+        ret_order["legs"].append({
+                    "id": leg["id"],
+                    "position_effect": leg["position_effect"],
+                    "ratio_quantity": leg["ratio_quantity"],
+                    "side": leg["side"],
+                    "expiration_date": leg["expiration_date"],
+                    "strike_price": leg["strike_price"],
+                    "option_type": leg["option_type"]
+                })
+    return(ret_order)
+
 def getOptionsByPrice(name, price):
     options = o.find_tradable_options(name, expirationDate=None, strikePrice=price, info=None)
     return(options)
