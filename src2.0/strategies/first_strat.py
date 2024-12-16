@@ -25,6 +25,8 @@ def get_optimal_strategy(all_possible_combinations, stock_change_dist, percentag
     optimal_strategy    = None
     risk  = 0
     optimal_exp_profit_by_risk = 0
+    optimal_exp_profit         = 0
+    optimal_risk               = 0
     optimal_profit_func = None
     exp_profit_per_strategy = []
     iteration = 0
@@ -63,7 +65,7 @@ def get_optimal_strategy(all_possible_combinations, stock_change_dist, percentag
         #if(o0["strike_price"] == 63.0 and o1["strike_price"] == 66.0 and o2["strike_price"] == 68.0 and o3["strike_price"] == 70.0):
         #    print(o0["strike_price"],o1["strike_price"],o2["strike_price"],o3["strike_price"])
 
-        if(exp_profit / risk > optimal_exp_profit_by_risk):
+        if(exp_profit > optimal_exp_profit):
         #    if(o0["strike_price"] == 55.0 and o1["strike_price"] == 58.5 and o2["strike_price"] == 59.0 and o3["strike_price"] == 60.0):
         #        print(o0["strike_price"],o1["strike_price"],o2["strike_price"],o3["strike_price"])
 
@@ -75,11 +77,13 @@ def get_optimal_strategy(all_possible_combinations, stock_change_dist, percentag
             print(f"exp_profit = {exp_profit}")
             print(f"new optimal profit/risk = {exp_profit/risk}")
             """
+            optimal_exp_profit = exp_profit
+            optimal_risk = risk
             optimal_exp_profit_by_risk = exp_profit / risk
             optimal_strategy = (o0, o1, o2 ,o3)
             optimal_profit_func = profit
 
-    return((optimal_strategy, optimal_exp_profit_by_risk, optimal_profit_func, exp_profit_per_strategy, bin_averages))
+    return((optimal_strategy, optimal_exp_profit_by_risk, optimal_profit_func, exp_profit_per_strategy, bin_averages, optimal_exp_profit, optimal_risk))
 
 def create_spread(strat, stock):
     actions = ["buy", "sell", "sell", "buy"]
@@ -105,7 +109,7 @@ def create_spread(strat, stock):
     if(price < 0):
         price = -price
 
-    price = round(price, 2)
+    price = round(price, 1)
     if(price == 0):
         price = .01
         direction = "debit"
@@ -156,7 +160,7 @@ def main(stocks, email, execute, test, trade_data):
         all_possible_2_combinations_flipped = [(b, a, None, None) for a, b, _, __ in all_possible_2_combinations]
         all_singles                         = [(a,None,None,None) for a in options]
         all_possible_combinations = all_possible_2_combinations + all_possible_4_combinations + all_possible_2_combinations_flipped + all_singles
-        optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, bin_averages = get_optimal_strategy(all_possible_combinations, stock_change_dist, percentages, current_price)###
+        optimal_strategy, optimal_exp_profit_by_risk, optimal_profit_func, exp_profit_per_strategy, bin_averages, optimal_exp_profit, optimal_risk = get_optimal_strategy(all_possible_combinations, stock_change_dist, percentages, current_price)
 
         #visualize optimal option strategy
         visualize_optimal_strategy(bin_averages, optimal_strategy, optimal_exp_profit, optimal_profit_func, exp_profit_per_strategy, percentages) 
@@ -172,18 +176,18 @@ def main(stocks, email, execute, test, trade_data):
         # send the email summary
         body = create_body(optimal_strategy, images, optimal_exp_profit)
 
-        print(body)
         if(email):
             send("jnasti101@icloud.com", "jo@joeynasti.com", f"{stock} Summary", body)   
 
         # execute trades
+        spread = create_spread(optimal_strategy, stock)###
         if(execute):
-            spread = create_spread(optimal_strategy, stock)###
             print(json.dumps(spread, indent=4))
             spread_order = orderSpread(spread["direction"], spread["price"], spread["symbol"], spread["quantity"], spread["spread"])
             print(spread_order)
             if('id' not in spread_order):
                 print("!!ERROR!! Order did not go through")
+                exit()
             else:
                 trade_data.pending_positions[stock].append(trimOrder(spread_order))                             
         

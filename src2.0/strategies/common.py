@@ -92,7 +92,7 @@ def visualize_optimal_strategy(bin_averages, optimal_strategy, optimal_exp_profi
         print(plotille.plot(bin_averages, [optimal_profit_func(p) for p in bin_averages]))
         print(plotille.plot(bin_averages, percentages))
         print("expected profit: ", optimal_exp_profit)
-        with open("out.txt", "w") as f:
+        """with open("out.txt", "w") as f:
             for o in exp_profit_per_strategy:
                 if(len(o) == 4):
                     f.write(f"{o[0]}, {o[1]}, {o[2]}, {o[3]}\n")
@@ -100,4 +100,5 @@ def visualize_optimal_strategy(bin_averages, optimal_strategy, optimal_exp_profi
                     f.write(f"{o[0]}, {o[1]}, {o[2]}\n")
                 else:    
                     f.write(f"{o[0]}, {o[1]}, {o[2]}, {o[3]}, {o[4]}, {o[5]}\n")
+        """
   

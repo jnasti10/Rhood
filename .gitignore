@@ -1,8 +1,9 @@
 *.swp
 *.swo
 *.log
-*.txt
 *.obj
+out.txt
 .git_key
 .env
+rh-python3
 __pycache__

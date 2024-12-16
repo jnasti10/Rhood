@@ -1,4 +1,4 @@
-#! /usr/local/bin/python3.8
+#! /home/ec2-user/Misc/RHood/src2.0/rh-python3/bin/python
 from utils.rhoodfuncs       import login, get_price, getOptionsByDate, getHistoricals, orderSpread
 from utils.sendmail         import send, create_body
 from utils.plot_stuff       import plot_func, plot_hist
