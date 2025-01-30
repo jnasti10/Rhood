@@ -1,0 +1,11 @@
+{
+    "stock": "UPRO",
+    "time_interval": 1,
+    "weeks_per": 1,
+    "projection_strategy": "linear",
+    "loss_function": "maximize_profit",
+    "cash_threshold": 1000,
+    "email_recipient": "jnasti101@icloud.com",
+    "email_sender": "strat2@joeynasti.com"
+}
+

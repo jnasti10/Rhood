@@ -11,6 +11,7 @@ class Trade_data():
         self.active_positions = {}
         self.pending_positions = {}
         self.history_db       = {}
+        self.expiration_date = None
 
     def save(self):
         with open('/home/ec2-user/Misc/RHood/src2.0/utils/' + self.pickle_file, "wb") as fp:
@@ -63,9 +64,10 @@ class Trade_data():
         s += " princple    = " + str(self.principle) + "\n"
         s += " total_value = " + str(self.total_value) + "\n"
         s += " cash        = " + str(self.cash) + "\n"
-        s += "========= pending pos =========\n" + json.dumps(self.pending_positions, indent=4)
-        s += "========== active pos ==========\n" + json.dumps(self.active_positions, indent=4) + "\n"
-        s += " history_db  = " + json.dumps(self.history_db, indent=4) + "\n"
+        s += " exp date    = " + str(self.expiration_date) + "\n"
+        s += "========= pending pos =========\n" + json.dumps(self.pending_positions, indent=4) + "\n"
+        s += "========= active pos ==========\n" + json.dumps(self.active_positions, indent=4) + "\n"
+        s += "========= history_db ==========\n" + json.dumps(self.history_db, indent=4) + "\n"
         print(s)
 
 if(__name__ == "__main__"):

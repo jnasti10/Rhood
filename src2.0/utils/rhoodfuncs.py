@@ -14,18 +14,19 @@ def login():
 def getOptionPositions():
     return(o.get_open_option_positions())
 
-def getOptionsByDate(name, date):
+def getOptionsByDate(name, date, opt_type="call"):
     options = {}
     options["trdble data"] = o.find_tradable_options(name, expirationDate=date, strikePrice=None, info=None)
     options["market data"] = []
     options["return data"] = []
     for option in options["trdble data"]:
-        if(option["type"] == 'call'):
+        if(option["type"] == opt_type):
             mrkt_data = o.get_option_market_data_by_id(option["id"])
             options["market data"].append(mrkt_data)
             if(mrkt_data):
                 if(options["market data"][-1][0]["high_fill_rate_buy_price"]):
                     tmp = {
+                        "type"                     : option["type"],
                         "strike_price"             : float(option["strike_price"]),
                         "exp_date"                 : option["expiration_date"],
                         "mark_price"               : float(options["market data"][-1][0]["adjusted_mark_price"]),
